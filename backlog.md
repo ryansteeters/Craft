@@ -8,4 +8,8 @@
   Task #7: Demonstrate ability to detect when a block is in front of the character
   Task #8: Demonstrate that the character jumps when a block is in front of it
   
-  
+## User Story B
+  Task #1: Demonstrate the chatbox accepting commands starting with the '/' character
+  Task #2: Demonstrate a teleport command
+  Task #3: Demonstrate a command that sets a coordinate as "home" allowing another command to teleport the user to the "home" coordinate
+  Task #4: Demonstrate the aility to change game modes with a command.

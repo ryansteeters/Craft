@@ -13,3 +13,10 @@
   Task #2: Demonstrate a teleport command
   Task #3: Demonstrate a command that sets a coordinate as "home" allowing another command to teleport the user to the "home" coordinate
   Task #4: Demonstrate the aility to change game modes with a command.
+
+## User Story C
+  Task #1: Demonstrate change in player view position by altering values in code
+  Task #2: Demonstrate shifting player view up from origin, and down from origin
+  Task #3: Demonstrate player view shifting up and down on a cycle in time with player's walk/run cycle (view-bobbing)
+  Task #4: Demonstrate method to track player movement speed
+  Task #5: Demonstrate changing player's field of view based on movement speed.

@@ -19,6 +19,7 @@
 #include "tinycthread.h"
 #include "util.h"
 #include "world.h"
+#include "stdbool.h"
 
 #define MAX_CHUNKS 8192
 #define MAX_PLAYERS 128
@@ -147,6 +148,7 @@ typedef struct {
     int server_port;
     int day_length;
     int time_changed;
+    bool isWalking;
     Block block0;
     Block block1;
     Block copy0;
@@ -2247,6 +2249,13 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
         }
     }
     if (!g->typing) {
+        if (key == CRAFT_KEY_AUTOWALK) {
+            if(g->isWalking) {
+                g->isWalking = false;     
+			} else {
+                g->isWalking = true;     
+			}
+		}
         if (key == CRAFT_KEY_FLY) {
             g->flying = !g->flying;
         }
@@ -2413,6 +2422,9 @@ void handle_movement(double dt) {
     State *s = &g->players->state;
     int sz = 0;
     int sx = 0;
+    if(g->isWalking) {
+        sz--;
+	}
     if (!g->typing) {
         float m = dt * 1.0;
         g->ortho = glfwGetKey(g->window, CRAFT_KEY_ORTHO) ? 64 : 0;
@@ -2798,6 +2810,7 @@ int main(int argc, char **argv) {
 
             // HANDLE MOVEMENT //
             handle_movement(dt);
+            
 
             // HANDLE DATA FROM SERVER //
             char *buffer = client_recv();

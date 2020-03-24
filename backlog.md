@@ -29,3 +29,10 @@
   * Task #5: Demonstrate working 'unpause' button that will resume gameplay when clicked.
   * Task #6: Demonstrate 'Exit' button that will appear on pause window.
   * Task #7: Demonstrate working 'Exit' button that with exit the program when clicked.
+  
+## User Story E
+  * Task #1: Demonstrate the ability to walk forward while holding "w". Points: 1
+  * Task #2: Demonstrate the ability to start the auto walk with key press.
+  * Task #3: Demonstrate the ability to continually travel with no key press.
+  * Task #4: Demonstrate the ability to turn off the auto walk with same key press.
+  * Task #5: Demonstrate the ability to turn off the auto walk with any movement key.

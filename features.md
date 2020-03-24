@@ -16,3 +16,6 @@
 #4)Implement some form of command line to switch between game-modes
 
 
+#5)Implement auto walking button press to improve ability to control your character.
+  a) As a Craft user, I want to be able to auto walk so that I don't have to constantly hold my movement button.
+

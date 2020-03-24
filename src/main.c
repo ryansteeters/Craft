@@ -2176,6 +2176,15 @@ void on_middle_click() {
     }
 }
 
+void start_pause() {
+    char c = getchar(); //Waiting for character input pauses all other operations in the program.
+    printf("Hello World!\n"); //Print Hello World to the console for debug purposes.
+    // if(c == 'q' || c == 'Q'){
+    //     exit(0);
+    // }
+    return;
+}
+
 void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
     int control = mods & (GLFW_MOD_CONTROL | GLFW_MOD_SUPER);
     int exclusive =
@@ -2199,7 +2208,8 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
             g->typing = 0;
         }
         else if (exclusive) {
-            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); //Set cursor back to normal.
+            start_pause(); //Pause all current operations in craft in preparation for showing the pause menu.
         }
     }
     if (key == GLFW_KEY_ENTER) {
@@ -2437,6 +2447,7 @@ void handle_movement(double dt) {
         if (glfwGetKey(g->window, GLFW_KEY_RIGHT)) s->rx += m;
         if (glfwGetKey(g->window, GLFW_KEY_UP)) s->ry += m;
         if (glfwGetKey(g->window, GLFW_KEY_DOWN)) s->ry -= m;
+        //if (glfwGetKey(g->window, GLFW_KEY_ESCAPE)) printf("Hello World!\n");
     }
     float vx, vy, vz;
     get_motion_vector(g->flying, sz, sx, s->rx, s->ry, &vx, &vy, &vz);

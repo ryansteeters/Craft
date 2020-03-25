@@ -2237,6 +2237,10 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
                     client_talk(g->typing_buffer);
                 }
             }
+//this code checks the first character in the message for the '/' chracter which signifies a command and outputs an acknowledgement to the terminal
+	if(g->typing_buffer[0] == '/'){
+	printf("command received");
+}
         }
         else {
             if (control) {

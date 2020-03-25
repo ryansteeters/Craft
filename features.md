@@ -9,11 +9,12 @@
   a) As a Craft user, I want the player experience to feel more like actual minecraft, with camera bobbing to make movement       more fluid.
   b) As a Craft user, I want the player's field of view to change when sprinting in game to enhance the feel of sprinting.
 
-#3)Create a GUI on hitting ESCAPE so the player can pause the game, then select a resume button to resume or an exit button to leave the program
+#3)Create a GUI on hitting 'M' so the player can pause the game, then select a resume button to resume or an exit button to leave the program
   a) As a Craft user, I want to be able to pause my game of craft when I want to take a break.
   b) As a Craft user, I want to see a menu when I pause the game so that I can select to either resume or exit the game.
 
 #4)Implement some form of command line to switch between game-modes
 
+#5)Implement auto walking button press to improve ability to control your character.
+  a) As a Craft user, I want to be able to auto walk so that I don't have to constantly hold my movement button.
 
-..

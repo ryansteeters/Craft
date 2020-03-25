@@ -19,6 +19,7 @@
 #include "tinycthread.h"
 #include "util.h"
 #include "world.h"
+#include "stdbool.h"
 
 #define MAX_CHUNKS 8192
 #define MAX_PLAYERS 128
@@ -147,6 +148,7 @@ typedef struct {
     int server_port;
     int day_length;
     int time_changed;
+    bool isWalking;
     Block block0;
     Block block1;
     Block copy0;
@@ -2207,7 +2209,6 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
         }
         else if (exclusive) {
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); //Set cursor back to normal.
-            start_pause(); //Pause all current operations in craft in preparation for showing the pause menu.
         }
     }
     if (key == GLFW_KEY_ENTER) {
@@ -2257,6 +2258,18 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
         }
     }
     if (!g->typing) {
+        if (key == CRAFT_KEY_AUTOWALK) {
+            if(g->isWalking) {
+                g->isWalking = false;     
+			} else {
+                g->isWalking = true;     
+			}
+		}
+        if(key == CRAFT_KEY_PAUSEMENU) {
+            printf("\'M\' was pressed!");
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); //Set cursor back to normal.
+            start_pause(); //Pause all current operations in craft in preparation for showing the pause menu.
+        }
         if (key == CRAFT_KEY_FLY) {
             g->flying = !g->flying;
         }
@@ -2423,6 +2436,9 @@ void handle_movement(double dt) {
     State *s = &g->players->state;
     int sz = 0;
     int sx = 0;
+    if(g->isWalking) {
+        sz--;
+	}
     if (!g->typing) {
         float m = dt * 1.0;
         g->ortho = glfwGetKey(g->window, CRAFT_KEY_ORTHO) ? 64 : 0;
@@ -2435,7 +2451,7 @@ void handle_movement(double dt) {
         if (glfwGetKey(g->window, GLFW_KEY_RIGHT)) s->rx += m;
         if (glfwGetKey(g->window, GLFW_KEY_UP)) s->ry += m;
         if (glfwGetKey(g->window, GLFW_KEY_DOWN)) s->ry -= m;
-        //if (glfwGetKey(g->window, GLFW_KEY_ESCAPE)) printf("Hello World!\n");
+	if (glfwGetKey(g->window, GLFW_KEY_G)) printf("G key was pressed\n");
     }
     float vx, vy, vz;
     get_motion_vector(g->flying, sz, sx, s->rx, s->ry, &vx, &vy, &vz);
@@ -2809,6 +2825,7 @@ int main(int argc, char **argv) {
 
             // HANDLE MOVEMENT //
             handle_movement(dt);
+            
 
             // HANDLE DATA FROM SERVER //
             char *buffer = client_recv();

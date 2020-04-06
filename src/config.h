@@ -43,6 +43,7 @@
 #define CRAFT_KEY_COMMAND '/'
 #define CRAFT_KEY_SIGN '`'
 #define CRAFT_KEY_AUTOWALK 'Q'
+#define CRAFT_KEY_PAUSEMENU 'M'
 
 // advanced parameters
 #define CREATE_CHUNK_RADIUS 10

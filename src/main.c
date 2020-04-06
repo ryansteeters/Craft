@@ -2209,7 +2209,6 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
         }
         else if (exclusive) {
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); //Set cursor back to normal.
-            start_pause(); //Pause all current operations in craft in preparation for showing the pause menu.
         }
     }
     if (key == GLFW_KEY_ENTER) {
@@ -2237,6 +2236,10 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
                     client_talk(g->typing_buffer);
                 }
             }
+//this code checks the first character in the message for the '/' chracter which signifies a command and outputs an acknowledgement to the terminal
+	if(g->typing_buffer[0] == '/'){
+	printf("command received");
+}
         }
         else {
             if (control) {
@@ -2266,6 +2269,11 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
                 g->isWalking = true;     
 			}
 		}
+        if(key == CRAFT_KEY_PAUSEMENU) {
+            printf("\'M\' was pressed!");
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); //Set cursor back to normal.
+            start_pause(); //Pause all current operations in craft in preparation for showing the pause menu.
+        }
         if (key == CRAFT_KEY_FLY) {
             g->flying = !g->flying;
         }
@@ -2447,7 +2455,7 @@ void handle_movement(double dt) {
         if (glfwGetKey(g->window, GLFW_KEY_RIGHT)) s->rx += m;
         if (glfwGetKey(g->window, GLFW_KEY_UP)) s->ry += m;
         if (glfwGetKey(g->window, GLFW_KEY_DOWN)) s->ry -= m;
-        //if (glfwGetKey(g->window, GLFW_KEY_ESCAPE)) printf("Hello World!\n");
+	if (glfwGetKey(g->window, GLFW_KEY_G)) printf("G key was pressed\n");
     }
     float vx, vy, vz;
     get_motion_vector(g->flying, sz, sx, s->rx, s->ry, &vx, &vy, &vz);

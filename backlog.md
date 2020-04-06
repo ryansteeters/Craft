@@ -22,7 +22,7 @@
   * Task #5: Demonstrate changing player's field of view based on movement speed.
   
 ## User Story D
-  * Task #1: Demonstrate program accepting input from the 'escape' key. Points: 1
+  * Task #1: Demonstrate program accepting input from the 'M' key. Points: 1
   * Task #2: Demonstrate the ability to pause the program on keyboard input. Points: 5
   * Task #3: Demonstrate making a separate 'pause' window appear onscreen upon keyboard input.
   * Task #4: Demonstrate 'unpause' button that will appear on pause window.

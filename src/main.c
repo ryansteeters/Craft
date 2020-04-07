@@ -21,6 +21,8 @@
 #include "world.h"
 #include "stdbool.h"
 
+
+
 #define MAX_CHUNKS 8192
 #define MAX_PLAYERS 128
 #define WORKERS 4
@@ -2185,6 +2187,54 @@ void start_pause() {
     return;
 }
 
+//tokenization of commands
+int * tp_tokenize(char arg[]){
+int coord[3];
+int set[3];
+int lengths[3];
+int pointer = 2;
+int count = 0;
+while(arg[pointer] != '\0'){
+while(arg[pointer] == ' ' || arg[pointer] == '\t' || arg[pointer] == '\n' || arg[pointer] == '\r'){
+arg[pointer] = '\0';
+}
+set[count] = pointer;
+count++;
+pointer++;
+while(arg[pointer] != ' ' && arg[pointer] != '\t' && arg[pointer] != '\n' && arg[pointer] != '\r'){
+pointer++;
+}
+}
+for(int i=0; i<3;i++){
+count = 0;
+while(arg[set[i]+count]!='\0'){
+count++;
+}
+count++;
+lengths[i]=count;
+}
+count = 0;
+int sum;
+int pow;
+for(int i = 0; i<3;i++){
+sum=0;
+while(lengths[i]!=0){
+pow = 1;
+ for(int x=0; x<(lengths[i]-1); x++){
+	pow*=10;
+}
+sum+= (arg[set[i]] * pow);
+set[i]++;
+lengths[i]--;
+}
+coord[i]=sum;
+}
+for(int i=0; i<3;i++){
+printf(coord[i] + "\n");
+}
+int * this;
+return *this;
+}
 void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
     int control = mods & (GLFW_MOD_CONTROL | GLFW_MOD_SUPER);
     int exclusive =
@@ -2239,8 +2289,20 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
             }
 //this code checks the first character in the message for the '/' chracter which signifies a command and outputs an acknowledgement to the terminal
 	if(g->typing_buffer[0] == '/'){
-	printf("command received");
-}
+	printf("command received\n");
+//detect teleport
+	if(g->typing_buffer[1] == 't')	{
+	printf("preparing teleport\n");
+	//teleport v1
+	//client_position(s->x+5 ,s->y ,s->z ,s->rx ,s->ry);
+	//update_player(*me, 50, 50, 50, 0 ,0 ,0);
+	int *coordinates;
+	coordinates=tp_tokenize(g->typing_buffer);
+	//for(int i=0; i<3; i++){
+	//printf(coordinates[i] + '\n');
+//}			
+      	}
+				      }
         }
         else {
             if (control) {

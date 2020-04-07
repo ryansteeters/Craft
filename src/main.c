@@ -2269,6 +2269,11 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
                 g->isWalking = true;     
 			}
 		}
+        if(g->isWalking) {
+            if (key == CRAFT_KEY_FORWARD || key == CRAFT_KEY_BACKWARD) {
+                g->isWalking = false;     
+			} 
+		}
         if(key == CRAFT_KEY_PAUSEMENU) {
             printf("\'M\' was pressed!");
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); //Set cursor back to normal.

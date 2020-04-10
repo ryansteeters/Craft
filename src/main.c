@@ -2182,28 +2182,27 @@ static void pause_key_callback(GLFWwindow* window, int key, int scancode, int ac
     while(!glfwWindowShouldClose(window)){
         if (key == GLFW_KEY_R){
             printf("R was pressed!\n");
+            printf("isPaused is now false.\n");
             g->isPaused = false;
+            printf("Pause window should close now.\n");
             glfwSetWindowShouldClose(window, true);
             //glfwDestroyWindow(window);
             glfwPollEvents();
         }
         if(key == GLFW_KEY_E){
+            printf("e was pressed.\n");
+            printf("Craft will now close.\n");
             glfwTerminate();
             exit(0);
         }
     }
 }
 
-void show_pause_menu(){
-    GLFWwindow* w = glfwCreateWindow(200, 200, "Pause", NULL, NULL);
-    
-    glfwShowWindow(w);
-}
-
 ///
 /// Function used to kick off the pause feature once the 'M' key is pressed in Craft
 ///
 void start_pause() {
+    printf("Initializing linmath code for drawing in window\n");
     static const struct{
         float x, y;
         float r, g, b;
@@ -2240,10 +2239,11 @@ void start_pause() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 
-    printf("Hello World!\n"); //Print Hello World to the console for debug purposes.
-
+    printf("Creating new window\n");
     GLFWwindow* w = glfwCreateWindow(200, 200, "Pause", NULL, NULL);
+    printf("Showing pause window.\n");
     glfwShowWindow(w);
+    printf("Now awaiting keyboard input on new window.\n");
     glfwSetKeyCallback(w, pause_key_callback);
 
     glGenBuffers(1, &vertex_buffer);
@@ -2274,6 +2274,7 @@ void start_pause() {
     glVertexAttribPointer(vcol_location, 3, GL_FLOAT, GL_FALSE,
                           sizeof(vertices[0]), (void*) (sizeof(float) * 2));
     
+    printf("Executing drawing code.\n");
     while (!glfwWindowShouldClose(w))
     {
         float ratio;
@@ -2386,9 +2387,12 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
         /// Catches input of the 'M' key, frees the cursor and kicks off the pause function.
         ///
         if(key == CRAFT_KEY_PAUSEMENU) {
-            printf("\'M\' was pressed!");
+            printf("\'M\' was pressed!\n");
             g->isPaused = true;
+            printf("isPaused is now true\n");
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); //Set cursor back to normal.
+            printf("Cursor is now freed.\n");
+            printf("Beginning Pause function\n");
             start_pause(); //Pause all current operations in craft in preparation for showing the pause menu.
         }
         if (key == CRAFT_KEY_FLY) {

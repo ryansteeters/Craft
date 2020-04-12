@@ -2189,11 +2189,13 @@ void start_pause() {
 
 //tokenization of commands
 int * tp_tokenize(char arg[]){
+//variables
 int coord[3];
 int set[3];
 int lengths[3];
 int pointer = 2;
 int count = 0;
+//loops replace whitespace with null and locate tokens
 while(arg[pointer] != '\0'){
 while(arg[pointer] == ' ' || arg[pointer] == '\t' || arg[pointer] == '\n' || arg[pointer] == '\r'){
 arg[pointer] = '\0';
@@ -2205,6 +2207,7 @@ while(arg[pointer] != ' ' && arg[pointer] != '\t' && arg[pointer] != '\n' && arg
 pointer++;
 }
 }
+//get the lengths of each token
 for(int i=0; i<3;i++){
 count = 0;
 while(arg[set[i]+count]!='\0'){
@@ -2213,6 +2216,7 @@ count++;
 count++;
 lengths[i]=count;
 }
+//turn characters into integers
 count = 0;
 int sum;
 int pow;
@@ -2229,9 +2233,11 @@ lengths[i]--;
 }
 coord[i]=sum;
 }
-for(int i=0; i<3;i++){
-printf(coord[i] + "\n");
-}
+//attempting to print the input to console (seems segmentation fault occurs here)
+//for(int i=0; i<3;i++){
+//printf(coord[i] + "\n");
+//}
+//placeholders
 int * this;
 return *this;
 }
@@ -2294,10 +2300,13 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
 	if(g->typing_buffer[1] == 't')	{
 	printf("preparing teleport\n");
 	//teleport v1
+
+	//suspecting one of these two functions when formatted properly will work
 	//client_position(s->x+5 ,s->y ,s->z ,s->rx ,s->ry);
 	//update_player(*me, 50, 50, 50, 0 ,0 ,0);
 	int *coordinates;
 	coordinates=tp_tokenize(g->typing_buffer);
+//failed attempt at printing the returned value
 	//for(int i=0; i<3; i++){
 	//printf(coordinates[i] + '\n');
 //}			

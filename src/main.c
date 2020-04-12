@@ -2195,6 +2195,7 @@ int set[3];
 int lengths[3];
 int pointer = 2;
 int count = 0;
+printf("variables initialized\n");
 //loops replace whitespace with null and locate tokens
 while(arg[pointer] != '\0'){
 while(arg[pointer] == ' ' || arg[pointer] == '\t' || arg[pointer] == '\n' || arg[pointer] == '\r'){
@@ -2203,10 +2204,12 @@ arg[pointer] = '\0';
 set[count] = pointer;
 count++;
 pointer++;
+printf("found a token\n");
 while(arg[pointer] != ' ' && arg[pointer] != '\t' && arg[pointer] != '\n' && arg[pointer] != '\r'){
 pointer++;
 }
 }
+printf("section1 clear");
 //get the lengths of each token
 for(int i=0; i<3;i++){
 count = 0;
@@ -2216,6 +2219,7 @@ count++;
 count++;
 lengths[i]=count;
 }
+printf("section2 clear");
 //turn characters into integers
 count = 0;
 int sum;
@@ -2233,6 +2237,7 @@ lengths[i]--;
 }
 coord[i]=sum;
 }
+printf("section3 clear");
 //attempting to print the input to console (seems segmentation fault occurs here)
 //for(int i=0; i<3;i++){
 //printf(coord[i] + "\n");

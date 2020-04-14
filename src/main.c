@@ -2354,6 +2354,10 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
                     client_talk(g->typing_buffer);
                 }
             }
+//this code checks the first character in the message for the '/' chracter which signifies a command and outputs an acknowledgement to the terminal
+	if(g->typing_buffer[0] == '/'){
+	printf("command received");
+}
         }
         else {
             if (control) {
@@ -2382,6 +2386,11 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
 			} else {
                 g->isWalking = true;     
 			}
+		}
+        if(g->isWalking) {
+            if (key == CRAFT_KEY_FORWARD || key == CRAFT_KEY_BACKWARD) {
+                g->isWalking = false;     
+			} 
 		}
         ///
         /// Catches input of the 'M' key, frees the cursor and kicks off the pause function.
@@ -2568,6 +2577,8 @@ void handle_movement(double dt) {
         float m = dt * 1.0;
         g->ortho = glfwGetKey(g->window, CRAFT_KEY_ORTHO) ? 64 : 0;
         g->fov = glfwGetKey(g->window, CRAFT_KEY_ZOOM) ? 15 : 65;
+        if (glfwGetKey(g->window, CRAFT_KEY_CROUCH)) viewBob_offSet(0);
+        else viewBob_offSet(-.25);
         if (glfwGetKey(g->window, CRAFT_KEY_FORWARD)) sz--;
         if (glfwGetKey(g->window, CRAFT_KEY_BACKWARD)) sz++;
         if (glfwGetKey(g->window, CRAFT_KEY_LEFT)) sx--;

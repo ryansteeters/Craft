@@ -36,3 +36,4 @@
   * ~Task #3: Demonstrate the ability to continually travel with no key press.~ (Completed in sprint 1) Assigned to Dustin
   * ~Task #4: Demonstrate the ability to turn off the auto walk with same key press.~ (Completed in sprint 1) Assigned to Dustin
   * Task #5: Demonstrate the ability to turn off the auto walk with any movement key. Points: 2 Assigned to Dustin
+

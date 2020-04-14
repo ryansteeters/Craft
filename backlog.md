@@ -1,9 +1,11 @@
 ## User Story A
   * Task #1: Demonsrtate accepting keyboard input Points: 1
-  * Task #2: Demonstrate the ability change the players velocity based on keyboard input Points: 2
-  * Task #3: Demonstrate the ability to change the field of view of the player
-  * Task #4: Demonstrate the ability to sprint (change fov and increase velocity)
-  * Task #5: Demonstrate the camera shifting downward when shift is held
+  * Task #2: Demonstrate the ability change the players velocity based on keyboard input Points: 2 :complete:
+  * Task #3: Demonstrate the ability to change the field of view of the player Points:1  :complete:
+  * Task #4: Demonstrate the ability to sprint (change fov and increase velocity) Points: 2
+  * Task #5: Demonstrate the camera shifting downward when shift is held Points: 2
+    * Task #5.1: Reassign zoom from shift to 'z' 
+    * Task #5.2: Shift the camera shifting downward when shift is held 
   * Task #6: Demonstrate that character cannot fall off of blocks when shift is held
   * Task #7: Demonstrate ability to detect when a block is in front of the character
   * Task #8: Demonstrate that the character jumps when a block is in front of it
@@ -11,6 +13,8 @@
 ## User Story B
   * Task #1: Demonstrate the chatbox accepting commands starting with the '/' character Points: 1
   * Task #2: Demonstrate a teleport command Point: 5
+     *Task #2.1: Demonstrate tokenization of input Points:3
+     *Task #2.2: Demonstrate teleportation Capability Points:2
   * Task #3: Demonstrate a command that sets a coordinate as "home" allowing another command to teleport the user to the "home" coordinate
   * Task #4: Demonstrate the aility to change game modes with a command.
 

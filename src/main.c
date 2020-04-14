@@ -2177,6 +2177,9 @@ void on_middle_click() {
     }
 }
 
+///
+/// pause_key_callback is used to capture keyboard input while the pause menu is open.
+///
 static void pause_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     while(!glfwWindowShouldClose(window)){
@@ -2275,6 +2278,9 @@ void start_pause() {
                           sizeof(vertices[0]), (void*) (sizeof(float) * 2));
     
     printf("Executing drawing code.\n");
+    ///
+    /// The following code executes while the pause menu is open.
+    ///
     while (!glfwWindowShouldClose(w))
     {
         float ratio;
@@ -2303,6 +2309,9 @@ void start_pause() {
     return;
 }
 
+///
+/// on_key function captures keyboard input while the game is running.
+///
 void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
     int control = mods & (GLFW_MOD_CONTROL | GLFW_MOD_SUPER);
     int exclusive =

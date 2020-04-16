@@ -20,6 +20,7 @@
 #include "util.h"
 #include "world.h"
 #include "stdbool.h"
+#include "linmathmain.h"
 
 #define MAX_CHUNKS 8192
 #define MAX_PLAYERS 128
@@ -2285,7 +2286,7 @@ void start_pause() {
     {
         float ratio;
         int width, height;
-        //mat4x4 m, p, mvp;
+        mat4x4 m, p, mvp;
  
         glfwGetFramebufferSize(w, &width, &height);
         ratio = width / (float) height;
@@ -2305,7 +2306,9 @@ void start_pause() {
         glfwSwapBuffers(w);
         glfwPollEvents();
     }
-    
+    glfwDestroyWindow(w);
+ 
+    glfwTerminate();
     return;
 }
 

@@ -1,16 +1,23 @@
 ## User Story A
-  * ~Task #1: Demonsrtate accepting keyboard input Points: 1~ (Completed in sprint 1) Assigned to Jimmy
-  * Task #2: Demonstrate the ability change the players velocity based on keyboard input Points: 2 (Started in sprint 1, carried over to sprint 2) Assigned to Jimmy
-  * Task #3: Demonstrate the ability to change the field of view of the player. Points: 3 Assigned to Jimmy
-  * Task #4: Demonstrate the ability to sprint (change fov and increase velocity). Points: 2 Assigned to Jimmy
-  * Task #5: Demonstrate the camera shifting downward when shift is held
+  * Task #1: Demonsrtate accepting keyboard input Points: 1
+  * Task #2: Demonstrate the ability change the players velocity based on keyboard input Points: 2 :complete:
+  * Task #3: Demonstrate the ability to change the field of view of the player Points:1  :complete:
+  * Task #4: Demonstrate the ability to sprint (change fov and increase velocity) Points: 2
+  * Task #5: Demonstrate the camera shifting downward when shift is held Points: 2
+    * Task #5.1: Reassign zoom from shift to 'z' 
+    * Task #5.2: Shift the camera shifting downward when shift is held 
+
   * Task #6: Demonstrate that character cannot fall off of blocks when shift is held
   * Task #7: Demonstrate ability to detect when a block is in front of the character
   * Task #8: Demonstrate that the character jumps when a block is in front of it
   
 ## User Story B
-  * ~Task #1: Demonstrate the chatbox accepting commands starting with the '/' character Points: 1~ (Completed in sprint 1) Assigned to Noah
-  * Task #2: Demonstrate a teleport command Point: 5 (Started in sprint 1, carried over to sprint 2) Assigned to Noah
+
+  * Task #1: Demonstrate the chatbox accepting commands starting with the '/' character Points: 1
+  * Task #2: Demonstrate a teleport command Point: 5
+     *Task #2.1: Demonstrate tokenization of input Points:3
+     *Task #2.2: Demonstrate teleportation Capability Points:2
+
   * Task #3: Demonstrate a command that sets a coordinate as "home" allowing another command to teleport the user to the "home" coordinate
   * Task #4: Demonstrate the aility to change game modes with a command.
 
@@ -31,9 +38,9 @@
   * Task #7: Demonstrate working 'Exit' button that with exit the program when clicked.
   
 ## User Story E
+
   * ~Task #1: Demonstrate the ability to walk forward while holding "w". Points: 1~ (Completed in sprint 1) Assigned to Dustin
   * ~Task #2: Demonstrate the ability to start the auto walk with key press.~ (Completed in sprint 1) Assigned to Dustin
   * ~Task #3: Demonstrate the ability to continually travel with no key press.~ (Completed in sprint 1) Assigned to Dustin
   * ~Task #4: Demonstrate the ability to turn off the auto walk with same key press.~ (Completed in sprint 1) Assigned to Dustin
   * Task #5: Demonstrate the ability to turn off the auto walk with any movement key. Points: 2 Assigned to Dustin
-

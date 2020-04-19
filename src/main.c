@@ -21,6 +21,8 @@
 #include "world.h"
 #include "stdbool.h"
 
+
+
 #define MAX_CHUNKS 8192
 #define MAX_PLAYERS 128
 #define WORKERS 4
@@ -2302,6 +2304,7 @@ void start_pause() {
     
     return;
 }
+
 //second attempt for tokenization
 int * tokenizev2(char arg[]){
 static int coord[3];
@@ -2340,6 +2343,7 @@ return ptr;
             } 
 
 
+
 //tokenization of commands
 int * tp_tokenize(char arg[]){
 //variables
@@ -2350,14 +2354,17 @@ int pointer = 2;
 int count = 0;
 printf("variables initialized\n");
 //loops replace whitespace with null and locate tokens
+
 while(arg[pointer] != '\0' && pointer <100){
 while((arg[pointer] == ' ' || arg[pointer] == '\t' || arg[pointer] == '\n' || arg[pointer] == '\r') && pointer < 100){
+
 arg[pointer] = '\0';
 }
 set[count] = pointer;
 count++;
 pointer++;
 printf("found a token\n");
+
 printf(pointer + "\n");
 while((arg[pointer] != ' ' && arg[pointer] != '\t' && arg[pointer] != '\n' && arg[pointer] != '\r')  && pointer < 100){
 pointer++;
@@ -2384,7 +2391,9 @@ sum=0;
 while(lengths[i]!=0){
 pow = 1;
  for(int x=0; x<(lengths[i]-1); x++){
+
     pow*=10;
+
 }
 sum+= (arg[set[i]] * pow);
 set[i]++;
@@ -2454,6 +2463,7 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
                 }
             }
 //this code checks the first character in the message for the '/' chracter which signifies a command and outputs an acknowledgement to the terminal
+
     if(g->typing_buffer[0] == '/'){
     printf("command received\n");
 //detect teleport
@@ -2476,6 +2486,8 @@ printf(coordinates[i] + "\n");
 //}            
           }
                       }
+
+
         }
         else {
 

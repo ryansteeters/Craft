@@ -2303,32 +2303,41 @@ void start_pause() {
     return;
 }
 //second attempt for tokenization
-int* tokenizev2(char arg[]){
-int coord[3];
+int * tokenizev2(char arg[]){
+static int coord[3];
 int set;
 int pointer =2;
 int count = 0;
 int start;
-int end;
+int finish;
 int length;
 int pow;
-while(pointer < arg.size){
+while(pointer < 200 && count < 3){
 if(arg[pointer] != NULL && arg[pointer] !=' ' &&start == NULL){
 start = pointer;
-}
+                                				}
 if(((arg[pointer+1] ==NULL ||arg[pointer+1] == ' ')&&start!=NULL)&& finish!=NULL ){
 finish = pointer;
 length = finish-start;
 pointer = start;
-for(int i=0; i<length; length--)
+for(int i=0; i<length; length--){
 pow = 1;
  for(int x=0; x<(length-1); x++){
-	pow*=10;
-}
-coord[count] += (pow*arg[pointer]);
+    pow*=10;
+                }
+pow *= arg[pointer];
+coord[count] += (pow);
 pointer++;
-}
-}
+            }
+count++;
+if(count == 3){
+break;}
+                                        }
+pointer++;
+            }
+static int* ptr = coord;
+return ptr;
+            } 
 
 
 //tokenization of commands
@@ -2375,7 +2384,7 @@ sum=0;
 while(lengths[i]!=0){
 pow = 1;
  for(int x=0; x<(lengths[i]-1); x++){
-	pow*=10;
+    pow*=10;
 }
 sum+= (arg[set[i]] * pow);
 set[i]++;
@@ -2445,26 +2454,31 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
                 }
             }
 //this code checks the first character in the message for the '/' chracter which signifies a command and outputs an acknowledgement to the terminal
-	if(g->typing_buffer[0] == '/'){
-	printf("command received\n");
+    if(g->typing_buffer[0] == '/'){
+    printf("command received\n");
 //detect teleport
-	if(g->typing_buffer[1] == 't')	{
-	printf("preparing teleport\n");
-	//teleport v1
+    if(g->typing_buffer[1] == 't')    {
+    printf("preparing teleport\n");
+    //teleport v1
 
-	//suspecting one of these two functions when formatted properly will work
-	//client_position(s->x+5 ,s->y ,s->z ,s->rx ,s->ry);
-	//update_player(*me, 50, 50, 50, 0 ,0 ,0);
-	int *coordinates;
-	coordinates=tp_tokenize(g->typing_buffer);
+    //suspecting one of these two functions when formatted properly will work
+    //client_position(s->x+5 ,s->y ,s->z ,s->rx ,s->ry);
+    //update_player(*me, 50, 50, 50, 0 ,0 ,0);
+    int *coordinates;
+    coordinates=tokenizev2(g->typing_buffer);
+    printf("printing coordinates\n");
+    for(int i=0; i<3;i++){
+printf(coordinates[i] + "\n");
+}
 //failed attempt at printing the returned value
-	//for(int i=0; i<3; i++){
-	//printf(coordinates[i] + '\n');
-//}			
-      	}
-				      }
+    //for(int i=0; i<3; i++){
+    //printf(coordinates[i] + '\n');
+//}            
+          }
+                      }
         }
         else {
+
             if (control) {
                 on_right_click();
             }

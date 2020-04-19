@@ -151,6 +151,7 @@ typedef struct {
     int day_length;
     int time_changed;
     bool isWalking;
+    bool isPaused;
     Block block0;
     Block block1;
     Block copy0;
@@ -2178,14 +2179,170 @@ void on_middle_click() {
     }
 }
 
+static void pause_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    while(!glfwWindowShouldClose(window)){
+        if (key == GLFW_KEY_R){
+            printf("R was pressed!\n");
+            printf("isPaused is now false.\n");
+            g->isPaused = false;
+            printf("Pause window should close now.\n");
+            glfwSetWindowShouldClose(window, true);
+            //glfwDestroyWindow(window);
+            glfwPollEvents();
+        }
+        if(key == GLFW_KEY_E){
+            printf("e was pressed.\n");
+            printf("Craft will now close.\n");
+            glfwTerminate();
+            exit(0);
+        }
+    }
+}
+
+///
+/// Function used to kick off the pause feature once the 'M' key is pressed in Craft
+///
 void start_pause() {
-    char c = getchar(); //Waiting for character input pauses all other operations in the program.
-    printf("Hello World!\n"); //Print Hello World to the console for debug purposes.
-    // if(c == 'q' || c == 'Q'){
-    //     exit(0);
-    // }
+    printf("Initializing linmath code for drawing in window\n");
+    static const struct{
+        float x, y;
+        float r, g, b;
+    } 
+    vertices[3] = {
+        { -0.6f, -0.4f, 1.f, 0.f, 0.f },
+        {  0.6f, -0.4f, 0.f, 1.f, 0.f },
+        {   0.f,  0.6f, 0.f, 0.f, 1.f }
+    };
+ 
+    static const char* vertex_shader_text =
+        "#version 110\n"
+        "uniform mat4 MVP;\n"
+        "attribute vec3 vCol;\n"
+        "attribute vec2 vPos;\n"
+        "varying vec3 color;\n"
+        "void main()\n"
+        "{\n"
+        "    gl_Position = MVP * vec4(vPos, 0.0, 1.0);\n"
+        "    color = vCol;\n"
+        "}\n";
+ 
+    static const char* fragment_shader_text =
+        "#version 110\n"
+        "varying vec3 color;\n"
+        "void main()\n"
+        "{\n"
+        "    gl_FragColor = vec4(color, 1.0);\n"
+        "}\n";
+
+    GLuint vertex_buffer, vertex_shader, fragment_shader, program;
+    GLint mvp_location, vpos_location, vcol_location;
+
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+
+    printf("Creating new window\n");
+    GLFWwindow* w = glfwCreateWindow(200, 200, "Pause", NULL, NULL);
+    printf("Showing pause window.\n");
+    glfwShowWindow(w);
+    printf("Now awaiting keyboard input on new window.\n");
+    glfwSetKeyCallback(w, pause_key_callback);
+
+    glGenBuffers(1, &vertex_buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+ 
+    vertex_shader = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertex_shader, 1, &vertex_shader_text, NULL);
+    glCompileShader(vertex_shader);
+ 
+    fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragment_shader, 1, &fragment_shader_text, NULL);
+    glCompileShader(fragment_shader);
+ 
+    program = glCreateProgram();
+    glAttachShader(program, vertex_shader);
+    glAttachShader(program, fragment_shader);
+    glLinkProgram(program);
+ 
+    mvp_location = glGetUniformLocation(program, "MVP");
+    vpos_location = glGetAttribLocation(program, "vPos");
+    vcol_location = glGetAttribLocation(program, "vCol");
+ 
+    glEnableVertexAttribArray(vpos_location);
+    glVertexAttribPointer(vpos_location, 2, GL_FLOAT, GL_FALSE,
+                          sizeof(vertices[0]), (void*) 0);
+    glEnableVertexAttribArray(vcol_location);
+    glVertexAttribPointer(vcol_location, 3, GL_FLOAT, GL_FALSE,
+                          sizeof(vertices[0]), (void*) (sizeof(float) * 2));
+    
+    printf("Executing drawing code.\n");
+    while (!glfwWindowShouldClose(w))
+    {
+        float ratio;
+        int width, height;
+        //mat4x4 m, p, mvp;
+ 
+        glfwGetFramebufferSize(w, &width, &height);
+        ratio = width / (float) height;
+ 
+        glViewport(0, 0, width, height);
+        glClear(GL_COLOR_BUFFER_BIT);
+ 
+        // mat4x4_identity(m);
+        // mat4x4_rotate_Z(m, m, (float) glfwGetTime());
+        // mat4x4_ortho(p, -ratio, ratio, -1.f, 1.f, 1.f, -1.f);
+        // mat4x4_mul(mvp, p, m);
+ 
+        glUseProgram(program);
+        //glUniformMatrix4fv(mvp_location, 1, GL_FALSE, (const GLfloat*) mvp);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+ 
+        glfwSwapBuffers(w);
+        glfwPollEvents();
+    }
+    
     return;
 }
+
+//second attempt for tokenization
+int * tokenizev2(char arg[]){
+static int coord[3];
+int set;
+int pointer =2;
+int count = 0;
+int start;
+int finish;
+int length;
+int pow;
+while(pointer < 200 && count < 3){
+if(arg[pointer] != NULL && arg[pointer] !=' ' &&start == NULL){
+start = pointer;
+                                				}
+if(((arg[pointer+1] ==NULL ||arg[pointer+1] == ' ')&&start!=NULL)&& finish!=NULL ){
+finish = pointer;
+length = finish-start;
+pointer = start;
+for(int i=0; i<length; length--){
+pow = 1;
+ for(int x=0; x<(length-1); x++){
+    pow*=10;
+                }
+pow *= arg[pointer];
+coord[count] += (pow);
+pointer++;
+            }
+count++;
+if(count == 3){
+break;}
+                                        }
+pointer++;
+            }
+static int* ptr = coord;
+return ptr;
+            } 
+
+
 
 //tokenization of commands
 int * tp_tokenize(char arg[]){
@@ -2197,16 +2354,21 @@ int pointer = 2;
 int count = 0;
 printf("variables initialized\n");
 //loops replace whitespace with null and locate tokens
-while(arg[pointer] != '\0'){
-while(arg[pointer] == ' ' || arg[pointer] == '\t' || arg[pointer] == '\n' || arg[pointer] == '\r'){
+
+while(arg[pointer] != '\0' && pointer <100){
+while((arg[pointer] == ' ' || arg[pointer] == '\t' || arg[pointer] == '\n' || arg[pointer] == '\r') && pointer < 100){
+
 arg[pointer] = '\0';
 }
 set[count] = pointer;
 count++;
 pointer++;
 printf("found a token\n");
-while(arg[pointer] != ' ' && arg[pointer] != '\t' && arg[pointer] != '\n' && arg[pointer] != '\r'){
+
+printf(pointer + "\n");
+while((arg[pointer] != ' ' && arg[pointer] != '\t' && arg[pointer] != '\n' && arg[pointer] != '\r')  && pointer < 100){
 pointer++;
+
 }
 }
 printf("section1 clear");
@@ -2229,7 +2391,9 @@ sum=0;
 while(lengths[i]!=0){
 pow = 1;
  for(int x=0; x<(lengths[i]-1); x++){
-	pow*=10;
+
+    pow*=10;
+
 }
 sum+= (arg[set[i]] * pow);
 set[i]++;
@@ -2299,26 +2463,34 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
                 }
             }
 //this code checks the first character in the message for the '/' chracter which signifies a command and outputs an acknowledgement to the terminal
-	if(g->typing_buffer[0] == '/'){
-	printf("command received\n");
-//detect teleport
-	if(g->typing_buffer[1] == 't')	{
-	printf("preparing teleport\n");
-	//teleport v1
 
-	//suspecting one of these two functions when formatted properly will work
-	//client_position(s->x+5 ,s->y ,s->z ,s->rx ,s->ry);
-	//update_player(*me, 50, 50, 50, 0 ,0 ,0);
-	int *coordinates;
-	coordinates=tp_tokenize(g->typing_buffer);
+    if(g->typing_buffer[0] == '/'){
+    printf("command received\n");
+//detect teleport
+    if(g->typing_buffer[1] == 't')    {
+    printf("preparing teleport\n");
+    //teleport v1
+
+    //suspecting one of these two functions when formatted properly will work
+    //client_position(s->x+5 ,s->y ,s->z ,s->rx ,s->ry);
+    //update_player(*me, 50, 50, 50, 0 ,0 ,0);
+    int *coordinates;
+    coordinates=tokenizev2(g->typing_buffer);
+    printf("printing coordinates\n");
+    for(int i=0; i<3;i++){
+printf(coordinates[i] + "\n");
+}
 //failed attempt at printing the returned value
-	//for(int i=0; i<3; i++){
-	//printf(coordinates[i] + '\n');
-//}			
-      	}
-				      }
+    //for(int i=0; i<3; i++){
+    //printf(coordinates[i] + '\n');
+//}            
+          }
+                      }
+
+
         }
         else {
+
             if (control) {
                 on_right_click();
             }
@@ -2346,6 +2518,23 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
                 g->isWalking = true;     
 			}
 		}
+        if(g->isWalking) {
+            if (key == CRAFT_KEY_FORWARD || key == CRAFT_KEY_BACKWARD) {
+                g->isWalking = false;     
+			} 
+		}
+        ///
+        /// Catches input of the 'M' key, frees the cursor and kicks off the pause function.
+        ///
+        if(key == CRAFT_KEY_PAUSEMENU) {
+            printf("\'M\' was pressed!\n");
+            g->isPaused = true;
+            printf("isPaused is now true\n");
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); //Set cursor back to normal.
+            printf("Cursor is now freed.\n");
+            printf("Beginning Pause function\n");
+            start_pause(); //Pause all current operations in craft in preparation for showing the pause menu.
+        }
         if (key == CRAFT_KEY_FLY) {
             g->flying = !g->flying;
         }
@@ -2519,6 +2708,8 @@ void handle_movement(double dt) {
         float m = dt * 1.0;
         g->ortho = glfwGetKey(g->window, CRAFT_KEY_ORTHO) ? 64 : 0;
         g->fov = glfwGetKey(g->window, CRAFT_KEY_ZOOM) ? 15 : 65;
+        if (glfwGetKey(g->window, CRAFT_KEY_CROUCH)) viewBob_offSet(0);
+        else viewBob_offSet(-.25);
         if (glfwGetKey(g->window, CRAFT_KEY_FORWARD)) sz--;
         if (glfwGetKey(g->window, CRAFT_KEY_BACKWARD)) sz++;
         if (glfwGetKey(g->window, CRAFT_KEY_LEFT)) sx--;
@@ -2527,7 +2718,6 @@ void handle_movement(double dt) {
         if (glfwGetKey(g->window, GLFW_KEY_RIGHT)) s->rx += m;
         if (glfwGetKey(g->window, GLFW_KEY_UP)) s->ry += m;
         if (glfwGetKey(g->window, GLFW_KEY_DOWN)) s->ry -= m;
-        //if (glfwGetKey(g->window, GLFW_KEY_ESCAPE)) printf("Hello World!\n");
 	if (glfwGetKey(g->window, GLFW_KEY_G)) printf("G key was pressed\n");
     }
     float vx, vy, vz;

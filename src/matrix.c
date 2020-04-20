@@ -2,6 +2,10 @@
 #include "config.h"
 #include "matrix.h"
 #include "util.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+double offset = 0.25;
 
 void normalize(float *x, float *y, float *z) {
     float d = sqrtf((*x) * (*x) + (*y) * (*y) + (*z) * (*z));
@@ -208,14 +212,15 @@ void set_matrix_2d(float *matrix, int width, int height) {
     mat_ortho(matrix, 0, width, 0, height, -1, 1);
 }
 
-float viewBob_offSet(float y,_Bool isWalking, int init) {
+float viewBob_offSet(float y,_Bool isWalking) {
 	float viewHeight;
 	viewHeight = -y;
 	if (!isWalking){
 		return viewHeight;
 	}
-	viewHeight -= init;
-	init += init;	
+	viewHeight += offset;
+	offset = -1 * offset;
+	printf("%f", offset);
 	return viewHeight;
 }
 
@@ -230,7 +235,7 @@ void set_matrix_3d(
     float znear = 0.125;
     float zfar = radius * 32 + 64;
     mat_identity(a);
-    mat_translate(b, -x, viewBob_offSet(y, 1, 0.5), -z);
+    mat_translate(b, -x, viewBob_offSet(y, 1), -z);
     mat_multiply(a, b, a);
     mat_rotate(b, cosf(rx), 0, sinf(rx), ry);
     mat_multiply(a, b, a);

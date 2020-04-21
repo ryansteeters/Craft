@@ -2203,7 +2203,7 @@ static void pause_key_callback(GLFWwindow* window, int key, int scancode, int ac
 }
 
 ///
-/// render_loop code executes while the pause menu is open and 
+/// render_loop code executes while the pause menu is open and draws the two options: Unpause and exit
 ///
 void render_loop()
 {
@@ -2345,6 +2345,55 @@ void render_loop()
 	glVertex3f(230.0,360.0,0.0);
 	glEnd();
 
+    //[ in [U]
+    glBegin(GL_LINES);
+	glVertex3f(245.0,360.0,0.0);
+	glVertex3f(245.0,390.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(245.0,390.0,0.0);
+	glVertex3f(250.0,390.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(245.0,360.0,0.0);
+	glVertex3f(250.0,360.0,0.0);
+	glEnd();
+
+    //U in [U]
+    glBegin(GL_LINES);
+	glVertex3f(255.0,390.0,0.0);
+	glVertex3f(255.0,360.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(255.0,360.0,0.0);
+	glVertex3f(265.0,360.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(265.0,390.0,0.0);
+	glVertex3f(265.0,360.0,0.0);
+	glEnd();
+
+    //] in [U]
+    glBegin(GL_LINES);
+    glVertex3f(270.0,390.0,0.0);
+	glVertex3f(275.0,390.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+    glVertex3f(270.0,360.0,0.0);
+	glVertex3f(275.0,360.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+    glVertex3f(275.0,390.0,0.0);
+	glVertex3f(275.0,360.0,0.0);
+	glEnd();
+
+
     /////////////////////////////////////////////////////////////////////
 
     //E in exit
@@ -2395,6 +2444,8 @@ void render_loop()
 	glVertex3f(175.0,250.0,0.0);
 	glVertex3f(175.0,220.0,0.0);
 	glEnd();
+
+    
 }
 
 ///

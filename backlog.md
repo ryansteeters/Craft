@@ -15,9 +15,9 @@
   * Task #4: Demonstrate the aility to change game modes with a command.
 
 ## User Story C
-  * ~Task #1: Demonstrate change in player view position by altering values in code Points: 3 ~ Assigned to Ryan
-  * ~Task #2: Demonstrate shifting player view up from origin, and down from origin Points: 5 ~ Assigned to Ryan
-  * ~Task #3: Demonstrate player view shifting up and down on a cycle Points: 5 ~ Assigned to Ryan
+  * ~Task #1: Demonstrate change in player view position by altering values in code Points: 3~ Assigned to Ryan
+  * ~Task #2: Demonstrate shifting player view up from origin, and down from origin Points: 5~ Assigned to Ryan
+  * ~Task #3: Demonstrate player view shifting up and down on a cycle Points: 5~ Assigned to Ryan
   * Task #4: View shifting occurs only when the player is walking Points: 3 Assigned to Ryan
   * Task #5: View shift bobs in time with player movement/speeed Points: 8 Assigned to Ryan
   

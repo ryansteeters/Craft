@@ -15,11 +15,11 @@
   * Task #4: Demonstrate the aility to change game modes with a command.
 
 ## User Story C
-  * Task #1: Demonstrate change in player view position by altering values in code Points: 3 (Started in sprint 1, carried over to sprint 2) Assigned to Ryan
-  * Task #2: Demonstrate shifting player view up from origin, and down from origin Points: 5 (Started in sprint 1, carried over to sprint 2) Assigned to Ryan
-  * Task #3: Demonstrate player view shifting up and down on a cycle in time with player's walk/run cycle (view-bobbing)
-  * Task #4: Demonstrate method to track player movement speed
-  * Task #5: Demonstrate changing player's field of view based on movement speed.
+  * ~Task #1: Demonstrate change in player view position by altering values in code Points: 3 ~ Assigned to Ryan
+  * ~Task #2: Demonstrate shifting player view up from origin, and down from origin Points: 5 ~ Assigned to Ryan
+  * ~Task #3: Demonstrate player view shifting up and down on a cycle Points: 5 ~ Assigned to Ryan
+  * Task #4: View shifting occurs only when the player is walking Points: 3 Assigned to Ryan
+  * Task #5: View shift bobs in time with player movement/speeed Points: 8 Assigned to Ryan
   
 ## User Story D
   * ~Task #1: Demonstrate program accepting input from the 'escape' key. Points: 1~ (Completed in sprint 1) Assigned to Jonathan

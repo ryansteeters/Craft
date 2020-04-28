@@ -149,6 +149,10 @@ typedef struct {
     int day_length;
     int time_changed;
     bool isWalking;
+    ///
+    ///is Bobbing indicates when the player is in movement but not flying, thus bobbing
+    ///
+    bool isBobbing;
     Block block0;
     Block block1;
     Block copy0;
@@ -1335,7 +1339,7 @@ void ensure_chunks_worker(Player *player, Worker *worker) {
     float matrix[16];
     set_matrix_3d(
         matrix, g->width, g->height,
-        s->x, s->y, s->z, s->rx, s->ry, g->fov, g->ortho, g->render_radius);
+        s->x, s->y, s->z, s->rx, s->ry, g->fov, g->ortho, g->render_radius, g->isBobbing);
     float planes[6][4];
     frustum_planes(planes, g->render_radius, matrix);
     int p = chunked(s->x);
@@ -1618,7 +1622,7 @@ int render_chunks(Attrib *attrib, Player *player) {
     float matrix[16];
     set_matrix_3d(
         matrix, g->width, g->height,
-        s->x, s->y, s->z, s->rx, s->ry, g->fov, g->ortho, g->render_radius);
+        s->x, s->y, s->z, s->rx, s->ry, g->fov, g->ortho, g->render_radius, g->isBobbing);
     float planes[6][4];
     frustum_planes(planes, g->render_radius, matrix);
     glUseProgram(attrib->program);
@@ -1653,7 +1657,7 @@ void render_signs(Attrib *attrib, Player *player) {
     float matrix[16];
     set_matrix_3d(
         matrix, g->width, g->height,
-        s->x, s->y, s->z, s->rx, s->ry, g->fov, g->ortho, g->render_radius);
+        s->x, s->y, s->z, s->rx, s->ry, g->fov, g->ortho, g->render_radius,g->isBobbing);
     float planes[6][4];
     frustum_planes(planes, g->render_radius, matrix);
     glUseProgram(attrib->program);
@@ -1686,7 +1690,7 @@ void render_sign(Attrib *attrib, Player *player) {
     float matrix[16];
     set_matrix_3d(
         matrix, g->width, g->height,
-        s->x, s->y, s->z, s->rx, s->ry, g->fov, g->ortho, g->render_radius);
+        s->x, s->y, s->z, s->rx, s->ry, g->fov, g->ortho, g->render_radius,g->isBobbing);
     glUseProgram(attrib->program);
     glUniformMatrix4fv(attrib->matrix, 1, GL_FALSE, matrix);
     glUniform1i(attrib->sampler, 3);
@@ -1706,7 +1710,7 @@ void render_players(Attrib *attrib, Player *player) {
     float matrix[16];
     set_matrix_3d(
         matrix, g->width, g->height,
-        s->x, s->y, s->z, s->rx, s->ry, g->fov, g->ortho, g->render_radius);
+        s->x, s->y, s->z, s->rx, s->ry, g->fov, g->ortho, g->render_radius, g->isBobbing);
     glUseProgram(attrib->program);
     glUniformMatrix4fv(attrib->matrix, 1, GL_FALSE, matrix);
     glUniform3f(attrib->camera, s->x, s->y, s->z);
@@ -1725,7 +1729,7 @@ void render_sky(Attrib *attrib, Player *player, GLuint buffer) {
     float matrix[16];
     set_matrix_3d(
         matrix, g->width, g->height,
-        0, 0, 0, s->rx, s->ry, g->fov, 0, g->render_radius);
+        0, 0, 0, s->rx, s->ry, g->fov, 0, g->render_radius,g->isBobbing);
     glUseProgram(attrib->program);
     glUniformMatrix4fv(attrib->matrix, 1, GL_FALSE, matrix);
     glUniform1i(attrib->sampler, 2);
@@ -1738,7 +1742,7 @@ void render_wireframe(Attrib *attrib, Player *player) {
     float matrix[16];
     set_matrix_3d(
         matrix, g->width, g->height,
-        s->x, s->y, s->z, s->rx, s->ry, g->fov, g->ortho, g->render_radius);
+        s->x, s->y, s->z, s->rx, s->ry, g->fov, g->ortho, g->render_radius,g->isBobbing);
     int hx, hy, hz;
     int hw = hit_test(0, s->x, s->y, s->z, s->rx, s->ry, &hx, &hy, &hz);
     if (is_obstacle(hw)) {
@@ -2452,10 +2456,41 @@ void handle_movement(double dt) {
         float m = dt * 1.0;
         g->ortho = glfwGetKey(g->window, CRAFT_KEY_ORTHO) ? 64 : 0;
         g->fov = glfwGetKey(g->window, CRAFT_KEY_ZOOM) ? 15 : 65;
-        if (glfwGetKey(g->window, CRAFT_KEY_FORWARD)) sz--;
-        if (glfwGetKey(g->window, CRAFT_KEY_BACKWARD)) sz++;
-        if (glfwGetKey(g->window, CRAFT_KEY_LEFT)) sx--;
-        if (glfwGetKey(g->window, CRAFT_KEY_RIGHT)) sx++;
+	///
+	///If the user is not flying, then the key input by user is from walking, thus we can set the isWalking value to true or false
+	///
+       	if (glfwGetKey(g->window, CRAFT_KEY_FORWARD)){
+	       	sz--;
+		if(g->flying = 0){
+		       	g->isBobbing = true;
+		}else{
+			g->isBobbing = false;
+		}
+	}
+       	if (glfwGetKey(g->window, CRAFT_KEY_BACKWARD)){
+		sz++;
+		if(g->flying = 0){
+		  	g->isBobbing = true;     
+		}else{
+			g->isBobbing = false;
+		}
+	} 
+       	if (glfwGetKey(g->window, CRAFT_KEY_LEFT)){
+	       	sx--;
+		if(g->flying = 0){
+		       	g->isBobbing = true;
+		}else{
+			g->isBobbing = false;
+		}
+	}
+     	if (glfwGetKey(g->window, CRAFT_KEY_RIGHT)){
+	       	sx++;
+		if(g->flying = 0){
+		       	g->isBobbing = true;
+		}else{
+			g->isBobbing = false;
+		}
+	}
         if (glfwGetKey(g->window, GLFW_KEY_LEFT)) s->rx -= m;
         if (glfwGetKey(g->window, GLFW_KEY_RIGHT)) s->rx += m;
         if (glfwGetKey(g->window, GLFW_KEY_UP)) s->ry += m;

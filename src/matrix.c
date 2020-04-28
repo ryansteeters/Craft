@@ -227,7 +227,7 @@ float viewBob_offSet(float y,_Bool isWalking) {
 void set_matrix_3d(
     float *matrix, int width, int height,
     float x, float y, float z, float rx, float ry,
-    float fov, int ortho, int radius)
+    float fov, int ortho, int radius,_Bool isWalking)
 {
     float a[16];
     float b[16];
@@ -235,7 +235,8 @@ void set_matrix_3d(
     float znear = 0.125;
     float zfar = radius * 32 + 64;
     mat_identity(a);
-    mat_translate(b, -x, viewBob_offSet(y, 1), -z);
+    mat_translate(b, -x, viewBob_offSet(y, isWalking), -z);
+    printf("%d", isWalking);
     mat_multiply(a, b, a);
     mat_rotate(b, cosf(rx), 0, sinf(rx), ry);
     mat_multiply(a, b, a);

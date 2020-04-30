@@ -2305,8 +2305,13 @@ void start_pause() {
     return;
 }
 
-//second attempt for tokenization
+///
+///second attempt for tokenization
+///
 int * tokenizev2(char arg[]){
+///
+///variables
+///
 static int coord[3];
 int set;
 int pointer =2;
@@ -2315,6 +2320,9 @@ int start;
 int finish;
 int length;
 int pow;
+///
+///while loop checks the buffers first 200 slots
+///
 while(pointer < 200 && count < 3){
 if(arg[pointer] != NULL && arg[pointer] !=' ' &&start == NULL){
 start = pointer;
@@ -2338,33 +2346,37 @@ break;}
                                         }
 pointer++;
             }
+///
+///returning the coordinates as a static variable so the other function can still access it
+///
 static int* ptr = coord;
 return ptr;
             } 
 
-
-
-//tokenization of commands
+///
+///tokenization of commands
+///
 int * tp_tokenize(char arg[]){
-//variables
+///
+///variables
+///
 int coord[3];
 int set[3];
 int lengths[3];
 int pointer = 2;
 int count = 0;
 printf("variables initialized\n");
-//loops replace whitespace with null and locate tokens
-
+///
+///loops replace whitespace with null and locate tokens
+///
 while(arg[pointer] != '\0' && pointer <100){
 while((arg[pointer] == ' ' || arg[pointer] == '\t' || arg[pointer] == '\n' || arg[pointer] == '\r') && pointer < 100){
-
 arg[pointer] = '\0';
 }
 set[count] = pointer;
 count++;
 pointer++;
 printf("found a token\n");
-
 printf(pointer + "\n");
 while((arg[pointer] != ' ' && arg[pointer] != '\t' && arg[pointer] != '\n' && arg[pointer] != '\r')  && pointer < 100){
 pointer++;
@@ -2372,7 +2384,9 @@ pointer++;
 }
 }
 printf("section1 clear");
-//get the lengths of each token
+///
+///get the lengths of each token
+///
 for(int i=0; i<3;i++){
 count = 0;
 while(arg[set[i]+count]!='\0'){
@@ -2382,7 +2396,9 @@ count++;
 lengths[i]=count;
 }
 printf("section2 clear");
-//turn characters into integers
+///
+///turn characters into integers
+///
 count = 0;
 int sum;
 int pow;
@@ -2391,9 +2407,7 @@ sum=0;
 while(lengths[i]!=0){
 pow = 1;
  for(int x=0; x<(lengths[i]-1); x++){
-
     pow*=10;
-
 }
 sum+= (arg[set[i]] * pow);
 set[i]++;
@@ -2402,11 +2416,16 @@ lengths[i]--;
 coord[i]=sum;
 }
 printf("section3 clear");
-//attempting to print the input to console (seems segmentation fault occurs here)
-//for(int i=0; i<3;i++){
-//printf(coord[i] + "\n");
-//}
-//placeholders
+///
+///attempting to print the input to console (seems segmentation fault occurs here)
+///
+///for(int i=0; i<3;i++){
+///printf(coord[i] + "\n");
+///}
+///
+///
+///placeholders
+///
 int * this;
 return *this;
 }
@@ -2462,32 +2481,40 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
                     client_talk(g->typing_buffer);
                 }
             }
-//this code checks the first character in the message for the '/' chracter which signifies a command and outputs an acknowledgement to the terminal
-
+///
+///this code checks the first character in the message for the '/' chracter which signifies a command and outputs an acknowledgement to the terminal
+///
     if(g->typing_buffer[0] == '/'){
     printf("command received\n");
-//detect teleport
+///
+///detect teleport
+///
     if(g->typing_buffer[1] == 't')    {
     printf("preparing teleport\n");
-    //teleport v1
+///
+///teleport v1
+///
 
-    //suspecting one of these two functions when formatted properly will work
-    //client_position(s->x+5 ,s->y ,s->z ,s->rx ,s->ry);
-    //update_player(*me, 50, 50, 50, 0 ,0 ,0);
+///
+///suspecting one of these two functions when formatted properly will work
+///
+///client_position(s->x+5 ,s->y ,s->z ,s->rx ,s->ry);
+///update_player(*me, 50, 50, 50, 0 ,0 ,0);
+///
     int *coordinates;
     coordinates=tokenizev2(g->typing_buffer);
     printf("printing coordinates\n");
     for(int i=0; i<3;i++){
 printf(coordinates[i] + "\n");
 }
-//failed attempt at printing the returned value
-    //for(int i=0; i<3; i++){
-    //printf(coordinates[i] + '\n');
-//}            
+///
+///failed attempt at printing the returned value
+///for(int i=0; i<3; i++){
+///printf(coordinates[i] + '\n');
+///}            
+///
           }
                       }
-
-
         }
         else {
 

@@ -45,6 +45,7 @@
 #define CRAFT_KEY_SIGN '`'
 #define CRAFT_KEY_AUTOWALK 'Q'
 #define CRAFT_KEY_PAUSEMENU 'M'
+#define CRAFT_KEY_TIMETRAVEL 'Y'
 
 // advanced parameters
 #define CREATE_CHUNK_RADIUS 10

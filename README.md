@@ -92,22 +92,28 @@ the client.
 
 - WASD to move forward, left, backward, right.
 - Space to jump.
+- Left Shift to crouch.
+- Q allows the player to auto walk forward.
 - Left Click to destroy a block.
 - Right Click or Cmd + Left Click to create a block.
 - Ctrl + Right Click to toggle a block as a light source.
 - 1-9 to select the block type to create.
-- E to cycle through the block types.
+- E to cycle forward through the block types.
+- R to cycle backwards through block types.
 - Tab to toggle between walking and flying.
 - ZXCVBN to move in exact directions along the XYZ axes.
-- Left shift to zoom.
+- Z allows the player to to zoom.
 - F to show the scene in orthographic mode.
 - O to observe players in the main view.
 - P to observe players in the picture-in-picture view.
 - T to type text into chat.
+- M alllows the player to open a pause menu.
 - Forward slash (/) to enter a command.
 - Backquote (`) to write text on any block (signs).
 - Arrow keys emulate mouse movement.
 - Enter emulates mouse click.
+- Y allows the player to move the sun forward.
+- U allows the player to move the sun backward.
 
 ### Chat Commands
 

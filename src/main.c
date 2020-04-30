@@ -2392,6 +2392,9 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
                 g->isWalking = false;     
 			} 
 		}
+        if (key == CRAFT_KEY_TIMETRAVEL) {
+            glfwSetTime(glfwGetTime() + 80);
+		}
         ///
         /// Catches input of the 'M' key, frees the cursor and kicks off the pause function.
         ///

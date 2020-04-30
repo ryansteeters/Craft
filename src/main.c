@@ -2304,6 +2304,7 @@ void start_pause() {
 }
 
 void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
+    int timeMachine = 80;
     int control = mods & (GLFW_MOD_CONTROL | GLFW_MOD_SUPER);
     int exclusive =
         glfwGetInputMode(window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED;
@@ -2393,10 +2394,10 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
 			} 
 		}
         if (key == CRAFT_KEY_TIMETRAVEL) {
-            glfwSetTime(glfwGetTime() + 80);
+            glfwSetTime(glfwGetTime() + timeMachine);
 		}
         if (key == CRAFT_KEY_TIMEUNTRAVEL) {
-            glfwSetTime(glfwGetTime() - 80); // cannot go past time of creation
+            glfwSetTime(glfwGetTime() - timeMachine); // cannot go past time of creation
 		}
         ///
         /// Catches input of the 'M' key, frees the cursor and kicks off the pause function.

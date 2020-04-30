@@ -3,6 +3,8 @@
 #include "matrix.h"
 #include "util.h"
 
+float matrix_viewHeight;
+
 void normalize(float *x, float *y, float *z) {
     float d = sqrtf((*x) * (*x) + (*y) * (*y) + (*z) * (*z));
     *x /= d; *y /= d; *z /= d;
@@ -208,6 +210,11 @@ void set_matrix_2d(float *matrix, int width, int height) {
     mat_ortho(matrix, 0, width, 0, height, -1, 1);
 }
 
+float viewBob_offSet(float y) {
+	matrix_viewHeight = y;	    
+	return matrix_viewHeight;
+}
+
 void set_matrix_3d(
     float *matrix, int width, int height,
     float x, float y, float z, float rx, float ry,
@@ -219,7 +226,7 @@ void set_matrix_3d(
     float znear = 0.125;
     float zfar = radius * 32 + 64;
     mat_identity(a);
-    mat_translate(b, -x, -y, -z);
+    mat_translate(b, -x, -y + matrix_viewHeight, -z);
     mat_multiply(a, b, a);
     mat_rotate(b, cosf(rx), 0, sinf(rx), ry);
     mat_multiply(a, b, a);

@@ -2321,7 +2321,7 @@ int finish;
 int length;
 int pow;
 ///
-///while loop checks the buffers first 200 slots
+///while loop checks the buffers first 200 slots until the first 3 tokens are found
 ///
 while(pointer < 200 && count < 3){
 if(arg[pointer] != NULL && arg[pointer] !=' ' &&start == NULL){
@@ -2499,8 +2499,14 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
 ///suspecting one of these two functions when formatted properly will work
 ///
 ///client_position(s->x+5 ,s->y ,s->z ,s->rx ,s->ry);
-///update_player(*me, 50, 50, 50, 0 ,0 ,0);
 ///
+
+
+update_player(g->players, 50, 50, 50, 0 ,0 ,0);
+
+printf("teleported successfully\n");
+
+///this gets caught in an infinite loop right now
     int *coordinates;
     coordinates=tokenizev2(g->typing_buffer);
     printf("printing coordinates\n");
@@ -2516,7 +2522,7 @@ printf(coordinates[i] + "\n");
           }
                       }
         }
-        else {
+        else { 
 
             if (control) {
                 on_right_click();

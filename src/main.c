@@ -2324,12 +2324,16 @@ int pow;
 ///while loop checks the buffers first 200 slots until the first 3 tokens are found
 ///
 while(pointer < 200 && count < 3){
+///
+///finding the start of a token
+///
 if(arg[pointer] != NULL && arg[pointer] !=' ' &&start == NULL){
 start = pointer;
+                             				}
 ///
 ///finding the endpoint and going back to calculate the coordinate
-///                               				}
-if(((arg[pointer+1] ==NULL ||arg[pointer+1] == ' ')&&start!=NULL)&& finish!=NULL ){
+///  
+if(((arg[pointer+1] ==NULL ||arg[pointer+1] == ' ')&&start!=NULL)&& finish==NULL ){
 finish = pointer;
 length = finish-start;
 pointer = start;
@@ -2343,6 +2347,8 @@ coord[count] += (pow);
 pointer++;
             }
 count++;
+finish = NULL;
+start = NULL;
 if(count == 3){
 ///
 ///returning the coordinates as a static variable so the other function can still access it
@@ -2355,7 +2361,6 @@ pointer++;
             }
 
             } 
-}
 
 
 void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
@@ -2433,17 +2438,16 @@ printf("teleported successfully\n");
 ///
 int testing = 0;
 if (testing==1){
-    int *coordinates;
-    coordinates=tokenization(g->typing_buffer);
-    printf("printing coordinates\n");
-    for(int i=0; i<3;i++){
-printf(coordinates[i] + "\n");
-}
+   int *coordinates;
+   coordinates=tokenization(g->typing_buffer);
+   printf("tokenization succeeded!\n");
+   }
+
+
 	}
 
           }
-                      }
-        }
+            }
         else { 
 
             if (control) {

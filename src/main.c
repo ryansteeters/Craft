@@ -2308,7 +2308,7 @@ void start_pause() {
 ///
 ///second attempt for tokenization
 ///
-int * tokenizev2(char arg[]){
+int * tokenization(char arg[]){
 ///
 ///variables
 ///
@@ -2326,7 +2326,9 @@ int pow;
 while(pointer < 200 && count < 3){
 if(arg[pointer] != NULL && arg[pointer] !=' ' &&start == NULL){
 start = pointer;
-                                				}
+///
+///finding the endpoint and going back to calculate the coordinate
+///                               				}
 if(((arg[pointer+1] ==NULL ||arg[pointer+1] == ' ')&&start!=NULL)&& finish!=NULL ){
 finish = pointer;
 length = finish-start;
@@ -2342,93 +2344,20 @@ pointer++;
             }
 count++;
 if(count == 3){
-break;}
-                                        }
-pointer++;
-            }
 ///
 ///returning the coordinates as a static variable so the other function can still access it
 ///
 static int* ptr = coord;
 return ptr;
+}
+                                        }
+pointer++;
+            }
+
             } 
+}
 
-///
-///tokenization of commands
-///
-int * tp_tokenize(char arg[]){
-///
-///variables
-///
-int coord[3];
-int set[3];
-int lengths[3];
-int pointer = 2;
-int count = 0;
-printf("variables initialized\n");
-///
-///loops replace whitespace with null and locate tokens
-///
-while(arg[pointer] != '\0' && pointer <100){
-while((arg[pointer] == ' ' || arg[pointer] == '\t' || arg[pointer] == '\n' || arg[pointer] == '\r') && pointer < 100){
-arg[pointer] = '\0';
-}
-set[count] = pointer;
-count++;
-pointer++;
-printf("found a token\n");
-printf(pointer + "\n");
-while((arg[pointer] != ' ' && arg[pointer] != '\t' && arg[pointer] != '\n' && arg[pointer] != '\r')  && pointer < 100){
-pointer++;
 
-}
-}
-printf("section1 clear");
-///
-///get the lengths of each token
-///
-for(int i=0; i<3;i++){
-count = 0;
-while(arg[set[i]+count]!='\0'){
-count++;
-}
-count++;
-lengths[i]=count;
-}
-printf("section2 clear");
-///
-///turn characters into integers
-///
-count = 0;
-int sum;
-int pow;
-for(int i = 0; i<3;i++){
-sum=0;
-while(lengths[i]!=0){
-pow = 1;
- for(int x=0; x<(lengths[i]-1); x++){
-    pow*=10;
-}
-sum+= (arg[set[i]] * pow);
-set[i]++;
-lengths[i]--;
-}
-coord[i]=sum;
-}
-printf("section3 clear");
-///
-///attempting to print the input to console (seems segmentation fault occurs here)
-///
-///for(int i=0; i<3;i++){
-///printf(coord[i] + "\n");
-///}
-///
-///
-///placeholders
-///
-int * this;
-return *this;
-}
 void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
     int control = mods & (GLFW_MOD_CONTROL | GLFW_MOD_SUPER);
     int exclusive =
@@ -2495,30 +2424,23 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
 ///teleport v1
 ///
 
-///
-///suspecting one of these two functions when formatted properly will work
-///
-///client_position(s->x+5 ,s->y ,s->z ,s->rx ,s->ry);
-///
-
-
+printf("using update player to teleport the user to (50,50,50)\n");
 update_player(g->players, 50, 50, 50, 0 ,0 ,0);
 
 printf("teleported successfully\n");
-
+///
 ///this gets caught in an infinite loop right now
+///
+int testing = 0;
+if (testing==1){
     int *coordinates;
-    coordinates=tokenizev2(g->typing_buffer);
+    coordinates=tokenization(g->typing_buffer);
     printf("printing coordinates\n");
     for(int i=0; i<3;i++){
 printf(coordinates[i] + "\n");
 }
-///
-///failed attempt at printing the returned value
-///for(int i=0; i<3; i++){
-///printf(coordinates[i] + '\n');
-///}            
-///
+	}
+
           }
                       }
         }

@@ -150,6 +150,8 @@ typedef struct {
     int time_changed;
     bool isWalking;
     bool isPaused;
+    bool isPlacing;
+    bool isDeleting;
     Block block0;
     Block block1;
     Block copy0;
@@ -2394,6 +2396,22 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
                 g->isWalking = false;     
 			} 
 		}
+        if (key == CRAFT_KEY_AUTODELETE) {
+            if(g->isDeleting) {
+                g->isDeleting = false;
+			} else {
+                g->isDeleting = true;
+                g->isPlacing = false;
+			}
+		}
+        if (key == CRAFT_KEY_AUTOPLACE) {
+            if(g->isPlacing) {
+                g->isPlacing = false;
+			} else {
+                g->isPlacing = true; 
+                g->isDeleting = false;
+			}
+		}
         if (key == CRAFT_KEY_TIMETRAVEL) {
             glfwSetTime(glfwGetTime() + timeMachine);
 		}
@@ -2578,6 +2596,12 @@ void handle_movement(double dt) {
     State *s = &g->players->state;
     int sz = 0;
     int sx = 0;
+    if(g->isDeleting) {
+        on_left_click();
+	}
+    if(g->isPlacing) {
+        on_right_click();
+	}
     if(g->isWalking) {
         sz--;
 	}
@@ -2966,10 +2990,9 @@ int main(int argc, char **argv) {
 
             // HANDLE MOUSE INPUT //
             handle_mouse_input();
-
-            // HANDLE MOVEMENT //
-            handle_movement(dt);
             
+            // HANDLE MOVEMENT //
+            handle_movement(dt);          
 
             // HANDLE DATA FROM SERVER //
             char *buffer = client_recv();

@@ -2149,6 +2149,7 @@ void on_left_click() {
         record_block(hx, hy, hz, 0);
         if (is_plant(get_block(hx, hy + 1, hz))) {
             set_block(hx, hy + 1, hz, 0);
+            record_block(hx, hy, hz, items[g->item_index]);
         }
     }
 }

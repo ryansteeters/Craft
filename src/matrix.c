@@ -3,9 +3,7 @@
 #include "matrix.h"
 #include "util.h"
 #include <stdio.h>
-#include <stdlib.h>
-
-double offset = 0.01;
+double offset = 0.018;
 int rangeTrack = 0;
 
 float matrix_viewHeight;
@@ -229,16 +227,20 @@ float viewBob_offSet(float y,_Bool isWalking) {
 	viewHeight += offset;
 	if(offset > 0){
 		rangeTrack++;
-		if(rangeTrack == 25){
+		printf("%d ", rangeTrack);
+		if(rangeTrack >= 560){
+			printf("going down...\n");
 			offset = offset * -1;
 		}
 	}else{
 		rangeTrack--;
-		if(rangeTrack == 0){
+		printf("%d ", rangeTrack);
+		if(rangeTrack <= 0){
+			printf("going up...\n");
 			offset = offset * -1;
 		}
 	}
-	printf("%f", offset);
+
 	return viewHeight;
 
 }
@@ -263,8 +265,6 @@ void set_matrix_3d(
     ///viewBob_offSet() replaces the original call to -y; this is so the y value can be modified to simulate the viewbobbing effect when the player is walking
     ///
     mat_translate(b, -x, viewBob_offSet(y, isWalking), -z);
-    printf("%d", isWalking);
-
     mat_multiply(a, b, a);
     mat_rotate(b, cosf(rx), 0, sinf(rx), ry);
     mat_multiply(a, b, a);

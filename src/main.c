@@ -2917,8 +2917,8 @@ void handle_movement(double dt) {
 		}
 	}
 
-        if (glfwGetKey(g->window, CRAFT_KEY_CROUCH)) viewBob_offSet(0);
-        else viewBob_offSet(-.25);
+        if (glfwGetKey(g->window, CRAFT_KEY_CROUCH)) viewBob_offSet(0, false);
+        else viewBob_offSet(-.25, false);
         if (glfwGetKey(g->window, CRAFT_KEY_FORWARD)) sz--;
         if (glfwGetKey(g->window, CRAFT_KEY_BACKWARD)) sz++;
         if (glfwGetKey(g->window, CRAFT_KEY_LEFT)) sx--;

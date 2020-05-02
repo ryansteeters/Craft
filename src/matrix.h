@@ -22,7 +22,7 @@ void set_matrix_2d(float *matrix, int width, int height);
 void set_matrix_3d(
     float *matrix, int width, int height,
     float x, float y, float z, float rx, float ry,
-    float fov, int ortho, int radius);
+    float fov, int ortho, int radius,_Bool isWalking);
 void set_matrix_item(float *matrix, int width, int height, int scale);
 float viewBob_offSet(float y);
 

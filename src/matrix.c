@@ -2,6 +2,10 @@
 #include "config.h"
 #include "matrix.h"
 #include "util.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+double offset = 0.25;
 
 float matrix_viewHeight;
 
@@ -210,15 +214,32 @@ void set_matrix_2d(float *matrix, int width, int height) {
     mat_ortho(matrix, 0, width, 0, height, -1, 1);
 }
 
-float viewBob_offSet(float y) {
-	matrix_viewHeight = y;	    
-	return matrix_viewHeight;
+
+
+///
+///viewBob_offSet returns a modified value for the camera to offset while the player is walking
+///
+float viewBob_offSet(float y,_Bool isWalking) {
+	float viewHeight;
+	viewHeight = -y;
+	if (!isWalking){
+		return viewHeight;
+	}
+	viewHeight += offset;
+	offset = -1 * offset;
+	printf("%f", offset);
+	return viewHeight;
+
 }
 
+
+///
+///has been altered to accept 'isWalking' as a parameter to define when to apply the method to alter camera view
+///
 void set_matrix_3d(
     float *matrix, int width, int height,
     float x, float y, float z, float rx, float ry,
-    float fov, int ortho, int radius)
+    float fov, int ortho, int radius,_Bool isWalking)
 {
     float a[16];
     float b[16];
@@ -226,7 +247,13 @@ void set_matrix_3d(
     float znear = 0.125;
     float zfar = radius * 32 + 64;
     mat_identity(a);
-    mat_translate(b, -x, -y + matrix_viewHeight, -z);
+
+    ///
+    ///viewBob_offSet() replaces the original call to -y; this is so the y value can be modified to simulate the viewbobbing effect when the player is walking
+    ///
+    mat_translate(b, -x, viewBob_offSet(y, isWalking), -z);
+    printf("%d", isWalking);
+
     mat_multiply(a, b, a);
     mat_rotate(b, cosf(rx), 0, sinf(rx), ry);
     mat_multiply(a, b, a);

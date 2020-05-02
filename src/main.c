@@ -2888,22 +2888,22 @@ void handle_movement(double dt) {
        	if (glfwGetKey(g->window, CRAFT_KEY_FORWARD)){
 	       	sz--;
 		g->isBobbing = (g->flying == 0) ? true : false;
+		printf("Bobbing: %d\n",g->isBobbing);
 	}
        	if (glfwGetKey(g->window, CRAFT_KEY_BACKWARD)){
 		sz++;
 		g->isBobbing = (g->flying == 0) ? true : false;
-		
+		printf("Bobbing: %d\n",g->isBobbing);
 	} 
        	if (glfwGetKey(g->window, CRAFT_KEY_LEFT)){
 	       	sx--;
 		g->isBobbing = (g->flying == 0) ? true : false;
-		
+		printf("Bobbing: %d\n", g->isBobbing);
 	}
      	if (glfwGetKey(g->window, CRAFT_KEY_RIGHT)){
 	       	sx++;
-
 		g->isBobbing = (g->flying == 0) ? true : false;
-		
+		printf("Bobbing: %d\n", g->isBobbing);
 	}
 
         if (glfwGetKey(g->window, CRAFT_KEY_CROUCH)) viewBob_offSet(0, false);

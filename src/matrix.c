@@ -5,7 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-double offset = 0.25;
+double offset = 0.01;
+int rangeTrack = 0;
 
 float matrix_viewHeight;
 
@@ -226,7 +227,17 @@ float viewBob_offSet(float y,_Bool isWalking) {
 		return viewHeight;
 	}
 	viewHeight += offset;
-	offset = -1 * offset;
+	if(offset > 0){
+		rangeTrack++;
+		if(rangeTrack == 25){
+			offset = offset * -1;
+		}
+	}else{
+		rangeTrack--;
+		if(rangeTrack == 0){
+			offset = offset * -1;
+		}
+	}
 	printf("%f", offset);
 	return viewHeight;
 

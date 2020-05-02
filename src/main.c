@@ -20,6 +20,7 @@
 #include "util.h"
 #include "world.h"
 #include "stdbool.h"
+#include "linmathmain.h"
 
 #define MAX_CHUNKS 8192
 #define MAX_PLAYERS 128
@@ -2180,6 +2181,9 @@ void on_middle_click() {
     }
 }
 
+///
+/// pause_key_callback is used to capture keyboard input while the pause menu is open.
+///
 static void pause_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     while(!glfwWindowShouldClose(window)){
@@ -2202,110 +2206,349 @@ static void pause_key_callback(GLFWwindow* window, int key, int scancode, int ac
 }
 
 ///
+/// render_loop code executes while the pause menu is open and draws the two options: Unpause and exit
+///
+void render_loop()
+{
+	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glPointSize(10);
+	glLineWidth(2.5); 
+	glColor3f(1.0, 0.0, 0.0);
+
+    // U in unpause
+	glBegin(GL_LINES);
+	glVertex3f(100.0,390.0,0.0);
+	glVertex3f(100.0,360.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+    glVertex3f(100.0,360.0,0.0);
+	glVertex3f(115.0,360.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(115.0,390.0,0.0);
+	glVertex3f(115.0,360.0,0.0);
+	glEnd();
+
+    // N in unpause
+    glBegin(GL_LINES);
+	glVertex3f(120.0,390.0,0.0);
+	glVertex3f(120.0,360.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(120.0,390.0,0.0);
+	glVertex3f(130.0,360.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(130.0,390.0,0.0);
+	glVertex3f(130.0,360.0,0.0);
+	glEnd();
+
+    //P in unpause
+    glBegin(GL_LINES);
+	glVertex3f(135.0,390.0,0.0);
+	glVertex3f(135.0,360.0,0.0);
+	glEnd();
+    
+    glBegin(GL_LINES);
+	glVertex3f(135.0,390.0,0.0);
+	glVertex3f(145.0,390.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(135.0,380.0,0.0);
+	glVertex3f(145.0,380.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(145.0,390.0,0.0);
+	glVertex3f(145.0,380.0,0.0);
+	glEnd();
+
+    //A in unpause
+    glBegin(GL_LINES);
+	glVertex3f(150.0,360.0,0.0);
+	glVertex3f(160.0,390.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(160.0,390.0,0.0);
+	glVertex3f(170.0,360.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(155.0,375.0,0.0);
+	glVertex3f(165.0,375.0,0.0);
+	glEnd();
+
+    //U in unpause
+    glBegin(GL_LINES);
+	glVertex3f(175.0,360.0,0.0);
+	glVertex3f(175.0,390.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(175.0,360.0,0.0);
+	glVertex3f(185.0,360.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(185.0,360.0,0.0);
+	glVertex3f(185.0,390.0,0.0);
+	glEnd();
+
+    //S in unpause
+    glBegin(GL_LINES);
+	glVertex3f(190.0,390.0,0.0);
+	glVertex3f(210.0,390.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(190.0,390.0,0.0);
+	glVertex3f(190.0,375.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(190.0,375.0,0.0);
+	glVertex3f(210.0,375.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(190.0,360.0,0.0);
+	glVertex3f(210.0,360.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(210.0,375.0,0.0);
+	glVertex3f(210.0,360.0,0.0);
+	glEnd();
+
+    //E in unpause
+    glBegin(GL_LINES);
+	glVertex3f(215.0,390.0,0.0);
+	glVertex3f(215.0,360.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(215.0,390.0,0.0);
+	glVertex3f(230.0,390.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(215.0,375.0,0.0);
+	glVertex3f(230.0,375.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(215.0,360.0,0.0);
+	glVertex3f(230.0,360.0,0.0);
+	glEnd();
+
+    //[ in [U]
+    glBegin(GL_LINES);
+	glVertex3f(245.0,360.0,0.0);
+	glVertex3f(245.0,390.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(245.0,390.0,0.0);
+	glVertex3f(250.0,390.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(245.0,360.0,0.0);
+	glVertex3f(250.0,360.0,0.0);
+	glEnd();
+
+    //U in [U]
+    glBegin(GL_LINES);
+	glVertex3f(255.0,390.0,0.0);
+	glVertex3f(255.0,360.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(255.0,360.0,0.0);
+	glVertex3f(265.0,360.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(265.0,390.0,0.0);
+	glVertex3f(265.0,360.0,0.0);
+	glEnd();
+
+    //] in [U]
+    glBegin(GL_LINES);
+    glVertex3f(270.0,390.0,0.0);
+	glVertex3f(275.0,390.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+    glVertex3f(270.0,360.0,0.0);
+	glVertex3f(275.0,360.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+    glVertex3f(275.0,390.0,0.0);
+	glVertex3f(275.0,360.0,0.0);
+	glEnd();
+
+
+    /////////////////////////////////////////////////////////////////////
+
+    //E in exit
+    glBegin(GL_LINES);
+	glVertex3f(100.0,250.0,0.0);
+	glVertex3f(100.0,220.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(100.0,250.0,0.0);
+	glVertex3f(120.0,250.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(100.0,235.0,0.0);
+	glVertex3f(120.0,235.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(100.0,220.0,0.0);
+	glVertex3f(120.0,220.0,0.0);
+	glEnd();
+
+    //X in exit
+    glBegin(GL_LINES);
+	glVertex3f(125.0,220.0,0.0);
+	glVertex3f(145.0,250.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(125.0,250.0,0.0);
+	glVertex3f(145.0,220.0,0.0);
+	glEnd();
+
+    //I in exit
+    glBegin(GL_LINES);
+	glVertex3f(155.0,220.0,0.0);
+	glVertex3f(155.0,250.0,0.0);
+	glEnd();
+
+    //T in exit
+    glBegin(GL_LINES);
+	glVertex3f(160.0,250.0,0.0);
+	glVertex3f(190.0,250.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(175.0,250.0,0.0);
+	glVertex3f(175.0,220.0,0.0);
+	glEnd();
+
+    //[ in [E]
+    glBegin(GL_LINES);
+	glVertex3f(200.0,250.0,0.0);
+	glVertex3f(205.0,250.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(200.0,220.0,0.0);
+	glVertex3f(205.0,220.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(200.0,250.0,0.0);
+	glVertex3f(200.0,220.0,0.0);
+	glEnd();
+
+    //E in [E]
+    glBegin(GL_LINES);
+	glVertex3f(210.0,250.0,0.0);
+	glVertex3f(210.0,220.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(210.0,250.0,0.0);
+	glVertex3f(220.0,250.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(210.0,235.0,0.0);
+	glVertex3f(220.0,235.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(210.0,220.0,0.0);
+	glVertex3f(220.0,220.0,0.0);
+	glEnd();
+
+    //] in [E]
+    glBegin(GL_LINES);
+	glVertex3f(225.0,250.0,0.0);
+	glVertex3f(230.0,250.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(225.0,220.0,0.0);
+	glVertex3f(230.0,220.0,0.0);
+	glEnd();
+
+    glBegin(GL_LINES);
+	glVertex3f(230.0,250.0,0.0);
+	glVertex3f(230.0,220.0,0.0);
+	glEnd();
+}
+
+///
 /// Function used to kick off the pause feature once the 'M' key is pressed in Craft
 ///
 void start_pause() {
     printf("Initializing linmath code for drawing in window\n");
-    static const struct{
-        float x, y;
-        float r, g, b;
-    } 
-    vertices[3] = {
-        { -0.6f, -0.4f, 1.f, 0.f, 0.f },
-        {  0.6f, -0.4f, 0.f, 1.f, 0.f },
-        {   0.f,  0.6f, 0.f, 0.f, 1.f }
-    };
- 
-    static const char* vertex_shader_text =
-        "#version 110\n"
-        "uniform mat4 MVP;\n"
-        "attribute vec3 vCol;\n"
-        "attribute vec2 vPos;\n"
-        "varying vec3 color;\n"
-        "void main()\n"
-        "{\n"
-        "    gl_Position = MVP * vec4(vPos, 0.0, 1.0);\n"
-        "    color = vCol;\n"
-        "}\n";
- 
-    static const char* fragment_shader_text =
-        "#version 110\n"
-        "varying vec3 color;\n"
-        "void main()\n"
-        "{\n"
-        "    gl_FragColor = vec4(color, 1.0);\n"
-        "}\n";
-
-    GLuint vertex_buffer, vertex_shader, fragment_shader, program;
-    GLint mvp_location, vpos_location, vcol_location;
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 
     printf("Creating new window\n");
-    GLFWwindow* w = glfwCreateWindow(200, 200, "Pause", NULL, NULL);
+    GLFWwindow* w = glfwCreateWindow(400, 400, "Pause", NULL, NULL);
     printf("Showing pause window.\n");
-    glfwShowWindow(w);
+    //glfwShowWindow(w);
     printf("Now awaiting keyboard input on new window.\n");
     glfwSetKeyCallback(w, pause_key_callback);
 
-    glGenBuffers(1, &vertex_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
- 
-    vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertex_shader, 1, &vertex_shader_text, NULL);
-    glCompileShader(vertex_shader);
- 
-    fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment_shader, 1, &fragment_shader_text, NULL);
-    glCompileShader(fragment_shader);
- 
-    program = glCreateProgram();
-    glAttachShader(program, vertex_shader);
-    glAttachShader(program, fragment_shader);
-    glLinkProgram(program);
- 
-    mvp_location = glGetUniformLocation(program, "MVP");
-    vpos_location = glGetAttribLocation(program, "vPos");
-    vcol_location = glGetAttribLocation(program, "vCol");
- 
-    glEnableVertexAttribArray(vpos_location);
-    glVertexAttribPointer(vpos_location, 2, GL_FLOAT, GL_FALSE,
-                          sizeof(vertices[0]), (void*) 0);
-    glEnableVertexAttribArray(vcol_location);
-    glVertexAttribPointer(vcol_location, 3, GL_FLOAT, GL_FALSE,
-                          sizeof(vertices[0]), (void*) (sizeof(float) * 2));
+    glfwMakeContextCurrent(w);
+	glfwSwapInterval( 1 );
+
+    glViewport( 0, 0, 400, 400 );
+	glMatrixMode( GL_PROJECTION );
+	glLoadIdentity();
+
+    glOrtho(0.0,400.0,0.0,400.0,0.0,1.0); // this creates a canvas you can do 2D drawing on
     
     printf("Executing drawing code.\n");
+    ///
+    /// The following code executes while the pause menu is open.
+    ///
     while (!glfwWindowShouldClose(w))
     {
-        float ratio;
-        int width, height;
-        //mat4x4 m, p, mvp;
- 
-        glfwGetFramebufferSize(w, &width, &height);
-        ratio = width / (float) height;
- 
-        glViewport(0, 0, width, height);
-        glClear(GL_COLOR_BUFFER_BIT);
- 
-        // mat4x4_identity(m);
-        // mat4x4_rotate_Z(m, m, (float) glfwGetTime());
-        // mat4x4_ortho(p, -ratio, ratio, -1.f, 1.f, 1.f, -1.f);
-        // mat4x4_mul(mvp, p, m);
- 
-        glUseProgram(program);
-        //glUniformMatrix4fv(mvp_location, 1, GL_FALSE, (const GLfloat*) mvp);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
- 
-        glfwSwapBuffers(w);
-        glfwPollEvents();
+        // Draw gears
+		render_loop();
+
+		// Swap buffers
+		glfwSwapBuffers(w);
+		glfwPollEvents();
     }
-    
+    //glfwDestroyWindow(w);
+ 
+    glfwTerminate();
     return;
 }
 
+///
+/// on_key function captures keyboard input while the game is running.
+///
 void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
     int timeMachine = 80;
     int control = mods & (GLFW_MOD_CONTROL | GLFW_MOD_SUPER);

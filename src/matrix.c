@@ -3,6 +3,9 @@
 #include "matrix.h"
 #include "util.h"
 #include <stdio.h>
+///
+///offset is how much the camera is incremented up or down in viewBob_offset, rangeTrack is incremented to measure how long the camera should move up or down.
+///
 double offset = 0.018;
 int rangeTrack = 0;
 
@@ -225,6 +228,9 @@ float viewBob_offSet(float y,_Bool isWalking) {
 		return viewHeight;
 	}
 	viewHeight += offset;
+	///
+	///offset > 0, camera is moving up; else down
+	///
 	if(offset > 0){
 		rangeTrack++;
 		printf("%d ", rangeTrack);
@@ -240,7 +246,9 @@ float viewBob_offSet(float y,_Bool isWalking) {
 			offset = offset * -1;
 		}
 	}
-
+	///
+	///the returned, altered value that will adjust what height the camera sees
+	///
 	return viewHeight;
 
 }

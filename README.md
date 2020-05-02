@@ -96,6 +96,7 @@ the client.
 - Q allows the player to auto walk forward.
 - Left Click to destroy a block.
 - Right Click or Cmd + Left Click to create a block.
+- V toggles auto deletion of blocks targetted
 - Ctrl + Right Click to toggle a block as a light source.
 - 1-9 to select the block type to create.
 - E to cycle forward through the block types.

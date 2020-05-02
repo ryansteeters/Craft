@@ -2627,6 +2627,7 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
         }
     }
     if (!g->typing) {
+    // toggles auto walking if the key is pressed
         if (key == CRAFT_KEY_AUTOWALK) {
             if(g->isWalking) {
                 g->isWalking = false;     
@@ -2634,11 +2635,13 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
                 g->isWalking = true;     
 			}
 		}
+        // breaks auto walk if forward or backwards key is pressed
         if(g->isWalking) {
             if (key == CRAFT_KEY_FORWARD || key == CRAFT_KEY_BACKWARD) {
                 g->isWalking = false;     
 			} 
 		}
+        // toggles auto delete if the key is pressed or switch to auto placing
         if (key == CRAFT_KEY_AUTODELETE) {
             if(g->isDeleting) {
                 g->isDeleting = false;
@@ -2647,6 +2650,7 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
                 g->isPlacing = false;
 			}
 		}
+        // toggles auto placing if the key is pressed or switch to auto deleting.
         if (key == CRAFT_KEY_AUTOPLACE) {
             if(g->isPlacing) {
                 g->isPlacing = false;
@@ -2655,9 +2659,11 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
                 g->isDeleting = false;
 			}
 		}
+        // moves the sun roughly 3 hours forward when key is pressed
         if (key == CRAFT_KEY_TIMETRAVEL) {
             glfwSetTime(glfwGetTime() + timeMachine);
 		}
+        // moves the sun roughly 3 hours backwards when key is pressed
         if (key == CRAFT_KEY_TIMEUNTRAVEL) {
             glfwSetTime(glfwGetTime() - timeMachine); // cannot go past time of creation
 		}
@@ -2839,12 +2845,14 @@ void handle_movement(double dt) {
     State *s = &g->players->state;
     int sz = 0;
     int sx = 0;
+    // piggyback placing and deleting methods
     if(g->isDeleting) {
         on_left_click();
 	}
     if(g->isPlacing) {
         on_right_click();
 	}
+    // sz-- is forward movement so when isWalking is true character moves forward
     if(g->isWalking) {
         sz--;
 	}

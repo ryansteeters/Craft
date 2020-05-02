@@ -2884,37 +2884,26 @@ void handle_movement(double dt) {
 	///
 	///If the user is not flying, then the key input by user is from walking, thus we can set the isWalking value to true or false
 	///
+	g->isBobbing = false;
        	if (glfwGetKey(g->window, CRAFT_KEY_FORWARD)){
 	       	sz--;
-		if(g->flying = 0){
-		       	g->isBobbing = true;
-		}else{
-			g->isBobbing = false;
-		}
+		g->isBobbing = (g->flying == 0) ? true : false;
+		printf("Bobbing: %d\n",g->isBobbing);
 	}
        	if (glfwGetKey(g->window, CRAFT_KEY_BACKWARD)){
 		sz++;
-		if(g->flying = 0){
-		  	g->isBobbing = true;     
-		}else{
-			g->isBobbing = false;
-		}
+		g->isBobbing = (g->flying == 0) ? true : false;
+		printf("Bobbing: %d\n",g->isBobbing);
 	} 
        	if (glfwGetKey(g->window, CRAFT_KEY_LEFT)){
 	       	sx--;
-		if(g->flying = 0){
-		       	g->isBobbing = true;
-		}else{
-			g->isBobbing = false;
-		}
+		g->isBobbing = (g->flying == 0) ? true : false;
+		printf("Bobbing: %d\n", g->isBobbing);
 	}
      	if (glfwGetKey(g->window, CRAFT_KEY_RIGHT)){
 	       	sx++;
-		if(g->flying = 0){
-		       	g->isBobbing = true;
-		}else{
-			g->isBobbing = false;
-		}
+		g->isBobbing = (g->flying == 0) ? true : false;
+		printf("Bobbing: %d\n", g->isBobbing);
 	}
 
         if (glfwGetKey(g->window, CRAFT_KEY_CROUCH)) viewBob_offSet(0, false);

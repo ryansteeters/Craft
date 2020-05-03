@@ -12,7 +12,7 @@ double offset = 0.015;
 ///
 double rangeTrack = 0.0;
 
-float matrix_viewHeight;
+float crouchOffset;
 
 void normalize(float *x, float *y, float *z) {
     float d = sqrtf((*x) * (*x) + (*y) * (*y) + (*z) * (*z));
@@ -220,6 +220,11 @@ void set_matrix_2d(float *matrix, int width, int height) {
 }
 
 
+float crouch_offset(float y)
+{
+    crouchOffset = y;
+    return crouchOffset;
+}
 
 ///
 ///viewBob_offSet returns a modified value for the camera to offset while the player is walking. dt is passed to allow consistent bobbing across players
@@ -283,7 +288,7 @@ void set_matrix_3d(
     ///
     ///viewBob_offSet() replaces the original call to -y; this is so the y value can be modified to simulate the viewbobbing effect when the player is walking
     ///
-    mat_translate(b, -x, viewBob_offSet(y, isWalking,dt), -z);
+    mat_translate(b, -x, viewBob_offSet(y, isWalking,dt) + crouchOffset, -z);
     mat_multiply(a, b, a);
     mat_rotate(b, cosf(rx), 0, sinf(rx), ry);
     mat_multiply(a, b, a);

@@ -25,5 +25,6 @@ void set_matrix_3d(
     float fov, int ortho, int radius,_Bool isWalking, double dt);
 void set_matrix_item(float *matrix, int width, int height, int scale);
 float viewBob_offSet(float y,_Bool isWalking, double dt);
+float crouch_offset(float y);
 
 #endif

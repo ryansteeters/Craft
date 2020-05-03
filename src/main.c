@@ -149,6 +149,9 @@ typedef struct {
     int server_port;
     int day_length;
     int time_changed;
+    ///
+    ///dt indicates the change in time, which is used to scale the view for the viewbob effect
+    ///
     double dt;
     bool isWalking;
     ///
@@ -1342,6 +1345,9 @@ void force_chunks(Player *player) {
 void ensure_chunks_worker(Player *player, Worker *worker) {
     State *s = &player->state;
     float matrix[16];
+    ///
+    ///changed to pass data for view bobbing
+    ///
     set_matrix_3d(
         matrix, g->width, g->height,
         s->x, s->y, s->z, s->rx, s->ry, g->fov, g->ortho, g->render_radius, g->isBobbing,g->dt);
@@ -1625,6 +1631,9 @@ int render_chunks(Attrib *attrib, Player *player) {
     int q = chunked(s->z);
     float light = get_daylight();
     float matrix[16];
+    ///
+    ///changed to pass data for view bob
+    ///
     set_matrix_3d(
         matrix, g->width, g->height,
         s->x, s->y, s->z, s->rx, s->ry, g->fov, g->ortho, g->render_radius, g->isBobbing,g->dt);
@@ -1660,6 +1669,9 @@ void render_signs(Attrib *attrib, Player *player) {
     int p = chunked(s->x);
     int q = chunked(s->z);
     float matrix[16];
+    ///
+    ///changed to pass data for viewbob
+    ///
     set_matrix_3d(
         matrix, g->width, g->height,
         s->x, s->y, s->z, s->rx, s->ry, g->fov, g->ortho, g->render_radius,g->isBobbing,g->dt);
@@ -1693,6 +1705,9 @@ void render_sign(Attrib *attrib, Player *player) {
     }
     State *s = &player->state;
     float matrix[16];
+    ///
+    ///changed to pass data for viewbob
+    ///
     set_matrix_3d(
         matrix, g->width, g->height,
         s->x, s->y, s->z, s->rx, s->ry, g->fov, g->ortho, g->render_radius,g->isBobbing, g->dt);
@@ -1713,6 +1728,9 @@ void render_sign(Attrib *attrib, Player *player) {
 void render_players(Attrib *attrib, Player *player) {
     State *s = &player->state;
     float matrix[16];
+    ///
+    ///changed to pass data for viewbob
+    ///
     set_matrix_3d(
         matrix, g->width, g->height,
         s->x, s->y, s->z, s->rx, s->ry, g->fov, g->ortho, g->render_radius, g->isBobbing,g->dt);
@@ -1732,6 +1750,9 @@ void render_players(Attrib *attrib, Player *player) {
 void render_sky(Attrib *attrib, Player *player, GLuint buffer) {
     State *s = &player->state;
     float matrix[16];
+    ///
+    ///changed to pass data for viewbob
+    ///
     set_matrix_3d(
         matrix, g->width, g->height,
         0, 0, 0, s->rx, s->ry, g->fov, 0, g->render_radius,g->isBobbing,g->dt);
@@ -1745,6 +1766,9 @@ void render_sky(Attrib *attrib, Player *player, GLuint buffer) {
 void render_wireframe(Attrib *attrib, Player *player) {
     State *s = &player->state;
     float matrix[16];
+    ///
+    ///changed to pass data for viewbob
+    ///
     set_matrix_3d(
         matrix, g->width, g->height,
         s->x, s->y, s->z, s->rx, s->ry, g->fov, g->ortho, g->render_radius,g->isBobbing,g->dt);
@@ -2891,6 +2915,9 @@ void handle_movement(double dt) {
 	///dt is set in order to get a constant changing time function for consistent viewbobbing across players
 	///	
 	g->dt = dt * 1.0;
+	///
+	///set isBobbing to true when the player is moving
+	///
        	if (glfwGetKey(g->window, CRAFT_KEY_FORWARD)){
 	       	sz--;
 		g->isBobbing = (g->flying == 0) ? true : false;

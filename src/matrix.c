@@ -7,6 +7,9 @@
 ///offset is how much the camera is incremented up or down in viewBob_offset, rangeTrack is incremented to measure how long the camera should move up or down.
 ///
 double offset = 0.015;
+///
+///double value so that it can be incremented with dt as a unit of time
+///
 double rangeTrack = 0.0;
 
 float matrix_viewHeight;
@@ -223,7 +226,6 @@ void set_matrix_2d(float *matrix, int width, int height) {
 ///
 float viewBob_offSet(float y,_Bool isWalking, double dt) {
 	float viewHeight;
-	printf("%f ",dt);
 	viewHeight = -y;
 	if (!isWalking){
 		return viewHeight;
@@ -233,15 +235,23 @@ float viewBob_offSet(float y,_Bool isWalking, double dt) {
 	///offset > 0, camera is moving up; else down
 	///
 	if(offset > 0){
+		///
+		///rangeTrack is incremented by time, so while it is increasing offset is being added constantly until a certain condition
+		///
 		rangeTrack += dt * 90.0;
 		printf("%f ", rangeTrack);
+		printf("%f", dt);
 		if(rangeTrack >= 110){
 			printf("going down...\n");
 			offset = offset * -1;
 		}
 	}else{
+		///
+		///rangeTrack being decremented
+		///
 		rangeTrack -= dt * 90.0;
 		printf("%f ", rangeTrack);
+		printf("%f",dt);
 		if(rangeTrack <= 0){
 			printf("going up...\n");
 			offset = offset * -1;

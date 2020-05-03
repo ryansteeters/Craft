@@ -219,7 +219,9 @@ void set_matrix_2d(float *matrix, int width, int height) {
     mat_ortho(matrix, 0, width, 0, height, -1, 1);
 }
 
-
+///
+///crouch_offset sets the variable crouchOffset to the specified y value. This value is then used to offset the height of the camera by a small amount so that the character appears to be crouching.
+///
 float crouch_offset(float y)
 {
     crouchOffset = y;
@@ -288,7 +290,7 @@ void set_matrix_3d(
     ///
     ///viewBob_offSet() replaces the original call to -y; this is so the y value can be modified to simulate the viewbobbing effect when the player is walking
     ///
-    mat_translate(b, -x, viewBob_offSet(y, isWalking,dt) + crouchOffset, -z);
+    mat_translate(b, -x, viewBob_offSet(y, isWalking,dt) + crouchOffset, -z); //crouch offset here is set by the function crouch_offset()
     mat_multiply(a, b, a);
     mat_rotate(b, cosf(rx), 0, sinf(rx), ry);
     mat_multiply(a, b, a);

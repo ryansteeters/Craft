@@ -2895,6 +2895,7 @@ void handle_movement(double dt) {
     State *s = &g->players->state;
     int sz = 0;
     int sx = 0;
+    bool is_crouching;
     //
     // piggyback placing and deleting methods
     //
@@ -2950,15 +2951,15 @@ void handle_movement(double dt) {
 		g->isBobbing = (g->flying == 0) ? true : false;
 		printf("Bobbing: %d\n", g->isBobbing);
 	}
-
-        if (glfwGetKey(g->window, CRAFT_KEY_CROUCH)) 
+        is_crouching  = glfwGetKey(g->window, CRAFT_KEY_CROUCH);
+        if (is_crouching) 
         {
-            printf("crouching");
+            printf("crouching \n");
             crouch_offset(0);
         }
         else
         {
-            printf("not crouching");
+            //printf("not crouching");
             crouch_offset(-.25);
         }
         if (glfwGetKey(g->window, CRAFT_KEY_FORWARD)) sz--;
@@ -2984,6 +2985,8 @@ void handle_movement(double dt) {
         }
     }
     float speed = g->flying ? 20 : 5;
+    if (is_crouching)
+        speed *= .5;
     int estimate = roundf(sqrtf(
         powf(vx * speed, 2) +
         powf(vy * speed + ABS(dy) * 2, 2) +

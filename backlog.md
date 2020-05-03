@@ -7,6 +7,7 @@
   * Task #6: Demonstrate that character cannot fall off of blocks when shift is held
   * Task #7: Demonstrate ability to detect when a block is in front of the character
   * Task #8: Demonstrate that the character jumps when a block is in front of it
+  * Task #9: Demonstrate that the character slows down when shift is held
   
 ## User Story B
   * ~Task #1: Demonstrate the chatbox accepting commands starting with the '/' character Points: 1~ (Completed in sprint 1) Assigned to Noah

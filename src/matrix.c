@@ -6,8 +6,11 @@
 ///
 ///offset is how much the camera is incremented up or down in viewBob_offset, rangeTrack is incremented to measure how long the camera should move up or down.
 ///
-double offset = 0.018;
-int rangeTrack = 0;
+double offset = 0.015;
+///
+///double value so that it can be incremented with dt as a unit of time
+///
+double rangeTrack = 0.0;
 
 float matrix_viewHeight;
 
@@ -219,9 +222,9 @@ void set_matrix_2d(float *matrix, int width, int height) {
 
 
 ///
-///viewBob_offSet returns a modified value for the camera to offset while the player is walking
+///viewBob_offSet returns a modified value for the camera to offset while the player is walking. dt is passed to allow consistent bobbing across players
 ///
-float viewBob_offSet(float y,_Bool isWalking) {
+float viewBob_offSet(float y,_Bool isWalking, double dt) {
 	float viewHeight;
 	viewHeight = -y;
 	if (!isWalking){
@@ -232,15 +235,23 @@ float viewBob_offSet(float y,_Bool isWalking) {
 	///offset > 0, camera is moving up; else down
 	///
 	if(offset > 0){
-		rangeTrack++;
-		printf("%d ", rangeTrack);
-		if(rangeTrack >= 560){
+		///
+		///rangeTrack is incremented by time, so while it is increasing offset is being added constantly until a certain condition
+		///
+		rangeTrack += dt * 90.0;
+		printf("%f ", rangeTrack);
+		printf("%f", dt);
+		if(rangeTrack >= 110){
 			printf("going down...\n");
 			offset = offset * -1;
 		}
 	}else{
-		rangeTrack--;
-		printf("%d ", rangeTrack);
+		///
+		///rangeTrack being decremented
+		///
+		rangeTrack -= dt * 90.0;
+		printf("%f ", rangeTrack);
+		printf("%f",dt);
 		if(rangeTrack <= 0){
 			printf("going up...\n");
 			offset = offset * -1;
@@ -260,7 +271,7 @@ float viewBob_offSet(float y,_Bool isWalking) {
 void set_matrix_3d(
     float *matrix, int width, int height,
     float x, float y, float z, float rx, float ry,
-    float fov, int ortho, int radius,_Bool isWalking)
+    float fov, int ortho, int radius,_Bool isWalking, double dt)
 {
     float a[16];
     float b[16];
@@ -272,7 +283,7 @@ void set_matrix_3d(
     ///
     ///viewBob_offSet() replaces the original call to -y; this is so the y value can be modified to simulate the viewbobbing effect when the player is walking
     ///
-    mat_translate(b, -x, viewBob_offSet(y, isWalking), -z);
+    mat_translate(b, -x, viewBob_offSet(y, isWalking,dt), -z);
     mat_multiply(a, b, a);
     mat_rotate(b, cosf(rx), 0, sinf(rx), ry);
     mat_multiply(a, b, a);

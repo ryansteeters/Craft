@@ -2951,8 +2951,16 @@ void handle_movement(double dt) {
 		printf("Bobbing: %d\n", g->isBobbing);
 	}
 
-        if (glfwGetKey(g->window, CRAFT_KEY_CROUCH)) crouch_offset(0);
-        else crouch_offset(-.25);
+        if (glfwGetKey(g->window, CRAFT_KEY_CROUCH)) 
+        {
+            printf("crouching");
+            crouch_offset(0);
+        }
+        else
+        {
+            printf("not crouching");
+            crouch_offset(-.25);
+        }
         if (glfwGetKey(g->window, CRAFT_KEY_FORWARD)) sz--;
         if (glfwGetKey(g->window, CRAFT_KEY_BACKWARD)) sz++;
         if (glfwGetKey(g->window, CRAFT_KEY_LEFT)) sx--;

@@ -224,6 +224,7 @@ void set_matrix_2d(float *matrix, int width, int height) {
 ///
 float crouch_offset(float y)
 {
+    printf("Crouching enabled, lowering the camera by %.2f", y);
     crouchOffset = y;
     return crouchOffset;
 }

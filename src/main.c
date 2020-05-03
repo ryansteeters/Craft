@@ -2636,9 +2636,11 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
     //
         if (key == CRAFT_KEY_AUTOWALK) {
             if(g->isWalking) {
-                g->isWalking = false;     
+                g->isWalking = false;
+                printf("isWalking is off");
 			} else {
-                g->isWalking = true;     
+                g->isWalking = true;
+                printf("isWalking is on");
 			}
 		}
         //
@@ -2647,6 +2649,7 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
         if(g->isWalking) {
             if (key == CRAFT_KEY_FORWARD || key == CRAFT_KEY_BACKWARD) {
                 g->isWalking = false;     
+                printf("isWalking is off");
 			} 
 		}
         //
@@ -2655,9 +2658,11 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
         if (key == CRAFT_KEY_AUTODELETE) {
             if(g->isDeleting) {
                 g->isDeleting = false;
+                printf("isDeleting is off");
 			} else {
                 g->isDeleting = true;
                 g->isPlacing = false;
+                printf("isDeleting is on and isPlacing is off");
 			}
 		}
         //
@@ -2666,9 +2671,11 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
         if (key == CRAFT_KEY_AUTOPLACE) {
             if(g->isPlacing) {
                 g->isPlacing = false;
+                printf("isPlacing is false");
 			} else {
                 g->isPlacing = true; 
                 g->isDeleting = false;
+                printf("isPlacing is true and isDeleting is false");
 			}
 		}
         //
@@ -2676,12 +2683,14 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
         //
         if (key == CRAFT_KEY_TIMETRAVEL) {
             glfwSetTime(glfwGetTime() + timeMachine);
+            printf("to the future!");
 		}
         //
         // moves the sun roughly 3 hours backwards when key is pressed - cannot go past time of creation
         //
         if (key == CRAFT_KEY_TIMEUNTRAVEL) {
             glfwSetTime(glfwGetTime() - timeMachine); 
+            printf("back to the past!");
 		}
         ///
         /// Catches input of the 'M' key, frees the cursor and kicks off the pause function.
@@ -2866,15 +2875,18 @@ void handle_movement(double dt) {
     //
     if(g->isDeleting) {
         on_left_click();
+        printf("auto delete activated");
 	}
     if(g->isPlacing) {
         on_right_click();
+        print("auto placing activated");
 	}
     //
     // sz-- is forward movement so when isWalking is true character moves forward
     //
     if(g->isWalking) {
         sz--;
+        printf("moving forward");
 	}
     if (!g->typing) {
         float m = dt * 1.0;

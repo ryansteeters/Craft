@@ -2904,7 +2904,7 @@ void handle_movement(double dt) {
 	}
     if(g->isPlacing) {
         on_right_click();
-        print("auto placing activated");
+        printf("auto placing activated");
 	}
     //
     // sz-- is forward movement so when isWalking is true character moves forward

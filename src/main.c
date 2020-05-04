@@ -2993,6 +2993,7 @@ void handle_movement(double dt) {
         //Changes the feild of view by 5, add to existing so that the zoom key works with it.
         g->fov = g->fov + 5;
         speed *= 2;
+        printf("The character is sprinting, fov should also be increased. speed increased x2, fov increase of 5\n");
     }
     int estimate = roundf(sqrtf(
         powf(vx * speed, 2) +

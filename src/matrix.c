@@ -12,7 +12,7 @@ double offset = 0.015;
 ///
 double rangeTrack = 0.0;
 
-float matrix_viewHeight;
+float crouchOffset;
 
 void normalize(float *x, float *y, float *z) {
     float d = sqrtf((*x) * (*x) + (*y) * (*y) + (*z) * (*z));
@@ -219,7 +219,15 @@ void set_matrix_2d(float *matrix, int width, int height) {
     mat_ortho(matrix, 0, width, 0, height, -1, 1);
 }
 
-
+///
+///crouch_offset sets the variable crouchOffset to the specified y value. This value is then used to offset the height of the camera by a small amount so that the character appears to be crouching.
+///
+float crouch_offset(float y)
+{
+    printf("Crouching enabled, lowering the camera by %.2f", y);
+    crouchOffset = y;
+    return crouchOffset;
+}
 
 ///
 ///viewBob_offSet returns a modified value for the camera to offset while the player is walking. dt is passed to allow consistent bobbing across players
@@ -283,7 +291,7 @@ void set_matrix_3d(
     ///
     ///viewBob_offSet() replaces the original call to -y; this is so the y value can be modified to simulate the viewbobbing effect when the player is walking
     ///
-    mat_translate(b, -x, viewBob_offSet(y, isWalking,dt), -z);
+    mat_translate(b, -x, viewBob_offSet(y, isWalking,dt) + crouchOffset, -z); //crouch offset here is set by the function crouch_offset()
     mat_multiply(a, b, a);
     mat_rotate(b, cosf(rx), 0, sinf(rx), ry);
     mat_multiply(a, b, a);

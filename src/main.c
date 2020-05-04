@@ -2662,6 +2662,7 @@ void on_key(GLFWwindow *window, int key, int scancode, int action, int mods) {
         if (key == CRAFT_KEY_AUTOWALK) {
             if(g->isWalking) {
                 g->isWalking = false;
+
                 printf("isWalking is off");
 			} else {
                 g->isWalking = true;
@@ -2951,6 +2952,13 @@ void handle_movement(double dt) {
 		g->isBobbing = (g->flying == 0) ? true : false;
 		printf("Bobbing: %d\n", g->isBobbing);
 	}
+    ///
+    ///This if statement allows viewbobbing to be enabled when autowalking is turned on
+    ///
+    if(g->isWalking)
+    {
+        g->isBobbing = true;
+    }
         is_crouching  = glfwGetKey(g->window, CRAFT_KEY_CROUCH);
         if (is_crouching) 
         {

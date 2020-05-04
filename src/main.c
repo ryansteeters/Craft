@@ -2987,6 +2987,14 @@ void handle_movement(double dt) {
     float speed = g->flying ? 20 : 5;
     if (is_crouching)
         speed *= .5;
+    //When this if statement is called, the character should sprint
+    if (glfwGetKey(g->window, CRAFT_KEY_SPRINT))
+    {
+        //Changes the feild of view by 5, add to existing so that the zoom key works with it.
+        g->fov = g->fov + 5;
+        speed *= 2;
+        printf("The character is sprinting, fov should also be increased. speed increased x2, fov increase of 5\n");
+    }
     int estimate = roundf(sqrtf(
         powf(vx * speed, 2) +
         powf(vy * speed + ABS(dy) * 2, 2) +
